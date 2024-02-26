@@ -7,6 +7,7 @@ import org.koin.core.context.startKoin
 import ru.points.fitapp.di.databaseModule
 import ru.points.fitapp.di.repositoryModule
 import ru.points.fitapp.di.useCaseModule
+import ru.points.fitapp.di.viewModelModule
 
 class FitAppApplication : Application() {
 
@@ -19,7 +20,8 @@ class FitAppApplication : Application() {
             modules(
                 databaseModule,
                 repositoryModule,
-                useCaseModule
+                useCaseModule,
+                viewModelModule
             )
         }
     }
