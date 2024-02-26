@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import ru.points.fitapp.di.databaseModule
 import ru.points.fitapp.di.repositoryModule
+import ru.points.fitapp.di.useCaseModule
 
 class FitAppApplication : Application() {
 
@@ -17,7 +18,8 @@ class FitAppApplication : Application() {
             androidContext(this@FitAppApplication)
             modules(
                 databaseModule,
-                repositoryModule
+                repositoryModule,
+                useCaseModule
             )
         }
     }
