@@ -13,21 +13,21 @@ object ExerciseMapper {
         return ExerciseVo(
             id = value.id,
             title = value.title,
-            subtitle = "Вес ${value.weight}кг",
+            subtitle = if (value.weight == null) "" else "Вес ${value.weight}кг",
             color = mapTypeToColor(value.type),
             icon = mapTypeToIcon(value.type)
         )
     }
 
     fun mapTypeToColor(item: Exercise.Type): Color {
-        return when(item) {
+        return when (item) {
             Exercise.Type.CARDIO -> Color.Green
             Exercise.Type.STRENGTH -> Color.Red
         }
     }
 
     fun mapTypeToIcon(item: Exercise.Type): ImageVector {
-        return when(item) {
+        return when (item) {
             Exercise.Type.CARDIO -> Icons.Default.DirectionsRun
             Exercise.Type.STRENGTH -> Icons.Default.ScubaDiving
         }

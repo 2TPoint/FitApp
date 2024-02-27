@@ -7,7 +7,7 @@ import ru.points.fitapp.data.vo.ExerciseVo
 import ru.points.fitapp.domain.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.utils.ExerciseMapper
 
-class GetExerciseUseCaseImpl(
+class GetExercisesUseCaseImpl(
     private val exerciseRepository: ExerciseRepository
 ) : GetExercisesUseCase {
     override fun handle(): Flow<List<ExerciseVo>> {

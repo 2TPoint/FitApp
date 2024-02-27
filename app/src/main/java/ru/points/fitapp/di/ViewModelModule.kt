@@ -8,7 +8,10 @@ import ru.points.fitapp.ui.settings.component.SettingsViewModel
 val viewModelModule = module {
     viewModel<ExerciseListViewModel> {
         ExerciseListViewModel(
-            useCase = get()
+            getExercisesUseCase = get(),
+            getExerciseUseCase = get(),
+            insertExerciseUseCase = get(),
+            updateExerciseUseCase = get()
         )
     }
 
