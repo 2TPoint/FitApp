@@ -67,9 +67,13 @@ dependencies {
     //ViewModel for Jetpack Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
+    //BottomNavBar
+    implementation("androidx.compose.material:material:1.5.4")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     //Jetpack Compose Navigation
-//    val nav_version = "2.7.7"
-//    implementation("androidx.navigation:navigation-compose:$nav_version")
+    val nav_version = "2.7.7"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
