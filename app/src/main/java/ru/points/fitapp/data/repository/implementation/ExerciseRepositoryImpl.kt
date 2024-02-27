@@ -11,4 +11,20 @@ class ExerciseRepositoryImpl(
     override fun getExercises(): Flow<List<Exercise>> {
         return database.getExerciseDao().getExercises()
     }
+
+    override fun insertExercise(exercise: Exercise) {
+        database.getExerciseDao().insertExercise(exercise)
+    }
+
+    override fun getExercise(id: Long): Flow<Exercise> {
+        return database.getExerciseDao().getExercise(id = id)
+    }
+
+    override fun updateExercise(id: Long, title: String, weight: Float?) {
+        database.getExerciseDao().updateExercise(
+            id = id,
+            title = title,
+            weight = weight
+        )
+    }
 }
