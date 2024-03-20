@@ -1,5 +1,6 @@
 package ru.points.fitapp.ui.exercises.exercise_list.component
 
+import ru.points.fitapp.data.entity.Exercise
 import ru.points.fitapp.utils.Event
 
 sealed class ExerciseListEvent: Event {
@@ -18,8 +19,16 @@ sealed class PopupEvents: Event {
         val value: String
     ): PopupEvents()
 
+    data class UpdateDescription(
+        val value: String
+    ): PopupEvents()
+
     data class UpdateWeight(
         val value: String
+    ): PopupEvents()
+
+    data class UpdateType(
+        val value: Exercise.Type
     ): PopupEvents()
 
     data object SaveExercise: PopupEvents()

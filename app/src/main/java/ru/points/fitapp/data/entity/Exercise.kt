@@ -12,12 +12,14 @@ data class Exercise(
     val id: Long = 0,
     @ColumnInfo(name = "title")
     val title: String,
-    @ColumnInfo(name = "weight", )
+    @ColumnInfo(name = "description")
+    val description: String?,
+    @ColumnInfo(name = "weight")
     val weight: Float? = null,
     @ColumnInfo(name = "upNextTime")
-    val upNextTime: Boolean = false,
-    @ColumnInfo(name = "type")
-    val type: Type = Type.CARDIO
+    val upNextTime: Boolean? = false,
+    @ColumnInfo(name = "type", )
+    val type: Type = Type.STRENGTH
 ) {
     enum class Type {
         STRENGTH,

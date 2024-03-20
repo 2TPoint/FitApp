@@ -15,8 +15,11 @@ interface ExerciseDao {
     @Insert
     fun insertExercise(exercise: Exercise)
 
-    @Query("UPDATE exercise SET title = :title, weight = :weight WHERE id = :id ")
-    fun updateExercise(id: Long, title: String, weight: Float?)
+    @Query("UPDATE exercise SET title = :title, description = :description, weight = :weight, upNextTime = :upNextTime, type = :type WHERE id = :id ")
+    fun updateExercise(id: Long, title: String, description: String?,
+                       weight: Float?,
+                       upNextTime: Boolean,
+                       type: Exercise.Type)
 
     @Query("SELECT * FROM exercise WHERE id = :id")
     fun getExercise(id: Long): Flow<Exercise>

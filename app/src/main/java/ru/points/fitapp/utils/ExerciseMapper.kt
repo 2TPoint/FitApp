@@ -1,10 +1,6 @@
 package ru.points.fitapp.utils
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsRun
-import androidx.compose.material.icons.filled.ScubaDiving
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import ru.points.fitapp.data.entity.Exercise
 import ru.points.fitapp.data.vo.ExerciseVo
 
@@ -13,23 +9,24 @@ object ExerciseMapper {
         return ExerciseVo(
             id = value.id,
             title = value.title,
-            subtitle = if (value.weight == null) "" else "Вес ${value.weight}кг",
+            description = value.description ?: "",
+            value = "${(value.weight ?: 0f)} ${mapTypeToStr(value.type)}" ,
+            upNextTime = value.upNextTime ?: false,
             color = mapTypeToColor(value.type),
-            icon = mapTypeToIcon(value.type)
         )
+    }
+
+    fun mapTypeToStr(item: Exercise.Type): String {
+        return when (item) {
+            Exercise.Type.CARDIO -> "мин"
+            Exercise.Type.STRENGTH -> "кг"
+        }
     }
 
     fun mapTypeToColor(item: Exercise.Type): Color {
         return when (item) {
             Exercise.Type.CARDIO -> Color.Green
             Exercise.Type.STRENGTH -> Color.Red
-        }
-    }
-
-    fun mapTypeToIcon(item: Exercise.Type): ImageVector {
-        return when (item) {
-            Exercise.Type.CARDIO -> Icons.Default.DirectionsRun
-            Exercise.Type.STRENGTH -> Icons.Default.ScubaDiving
         }
     }
 }

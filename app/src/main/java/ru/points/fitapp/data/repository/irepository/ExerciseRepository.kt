@@ -8,7 +8,10 @@ interface ExerciseRepository {
 
     fun insertExercise(exercise: Exercise)
 
-    fun updateExercise(id: Long, title: String, weight: Float?)
+    fun updateExercise(id: Long, title: String, description: String?,
+                       weight: Float?,
+                       upNextTime: Boolean,
+                       type: Exercise.Type)
 
     fun getExercise(id: Long): Flow<Exercise>
 }

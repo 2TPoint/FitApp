@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.points.fitapp.data.entity.Exercise
 import ru.points.fitapp.domain.use_case_interface.GetExerciseUseCase
 import ru.points.fitapp.domain.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.use_case_interface.InsertExerciseUseCase
@@ -60,8 +60,8 @@ class ExerciseListViewModel(
                 updatePopupStateName(value = event.value)
             }
 
-            is PopupEvents.UpdateToggle -> {
-                updatePopupStateToggle(value = event.value)
+            is PopupEvents.UpdateDescription -> {
+                updatePopupStateDescription(value = event.value)
             }
 
             is PopupEvents.UpdateWeight -> {
@@ -71,6 +71,18 @@ class ExerciseListViewModel(
             is PopupEvents.SaveExercise -> {
                 upsertExercise()
             }
+
+            is PopupEvents.UpdateType -> {
+                updatePopupStateType(value = event.value)
+            }
+        }
+    }
+
+    private fun updatePopupStateType(
+        value: Exercise.Type
+    ) {
+        _popupState.update {
+            it.copy(type = value)
         }
     }
 
@@ -97,8 +109,9 @@ class ExerciseListViewModel(
                     PopupState(
                         selectedId = id,
                         name = exercise.title,
-                        isWeightUsed = exercise.weight != null,
-                        weight = if (exercise.weight == null) "0" else exercise.weight.toString()
+                        description = exercise.description,
+                        weight = if (exercise.weight == null) "0" else exercise.weight.toString(),
+                        type = exercise.type
                     )
                 }
             }
@@ -117,9 +130,9 @@ class ExerciseListViewModel(
         }
     }
 
-    private fun updatePopupStateToggle(value: Boolean) {
+    private fun updatePopupStateDescription(value: String) {
         _popupState.update {
-            it.copy(isWeightUsed = value)
+            it.copy(description = value)
         }
     }
 
@@ -134,13 +147,19 @@ class ExerciseListViewModel(
             if (_popupState.value.selectedId == null) {
                 insertExerciseUseCase.handle(
                     title = _popupState.value.name,
-                    weight = _popupState.value.weight.toFloatOrNull()
+                    description = _popupState.value.description,
+                    weight = _popupState.value.weight.toFloatOrNull(),
+                    upNextTime = _popupState.value.upNextTime,
+                    type = _popupState.value.type
                 )
             } else {
                 updateExerciseUseCase.handle(
                     id = _popupState.value.selectedId!!,
                     title = _popupState.value.name,
-                    weight = _popupState.value.weight.toFloatOrNull()
+                    description = _popupState.value.description,
+                    weight = _popupState.value.weight.toFloatOrNull(),
+                    upNextTime = _popupState.value.upNextTime,
+                    type = _popupState.value.type
                 )
             }
         }
