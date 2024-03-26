@@ -1,30 +1,31 @@
 package ru.points.fitapp.data.repository.implementation
 
 import kotlinx.coroutines.flow.Flow
+import ru.points.fitapp.data.datasource.dao.ExerciseDao
 import ru.points.fitapp.data.datasource.database.FitAppDatabase
 import ru.points.fitapp.data.entity.Exercise
-import ru.points.fitapp.data.repository.irepository.ExerciseRepository
+import ru.points.fitapp.data.repository.repository.ExerciseRepository
 
 class ExerciseRepositoryImpl(
-    private val database: FitAppDatabase
+    private val dao: ExerciseDao
 ): ExerciseRepository {
     override fun getExercises(): Flow<List<Exercise>> {
-        return database.getExerciseDao().getExercises()
+        return dao.readAll()
     }
 
     override fun insertExercise(exercise: Exercise) {
-        database.getExerciseDao().insertExercise(exercise)
+        dao.create(exercise)
     }
 
-    override fun getExercise(id: Long): Flow<Exercise> {
-        return database.getExerciseDao().getExercise(id = id)
+    override fun getExerciseById(id: Long): Flow<Exercise> {
+        return dao.readById(id = id)
     }
 
-    override fun updateExercise(id: Long, title: String, weight: Float?) {
-        database.getExerciseDao().updateExercise(
-            id = id,
-            title = title,
-            weight = weight
-        )
+    override fun updateExercise(exercise: Exercise) {
+        dao.update(exercise)
+    }
+
+    override fun deleteExercise(exercise: Exercise) {
+        dao.delete(exercise)
     }
 }

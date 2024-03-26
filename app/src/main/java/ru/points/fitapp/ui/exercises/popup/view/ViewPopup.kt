@@ -1,5 +1,6 @@
 package ru.points.fitapp.ui.exercises.popup.view
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,16 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.points.fitapp.R
+import ru.points.fitapp.ui.exercises.main.component.viewpopup.ViewPopupEvent
+import ru.points.fitapp.ui.exercises.main.component.viewpopup.ViewPopupState
+import ru.points.fitapp.ui.exercises.popup.add.ToggleOption
 import ru.points.fitapp.utils.Event
 
 @Composable
 fun ViewPopup(
-    name: String,
-    description: String?,
-    value: Double,
-    type: String,
-    improveValue: Boolean,
-    time: Int?,
+    state: ViewPopupState,
+    onEvent: (Event) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -42,7 +42,7 @@ fun ViewPopup(
     ) {
 
         Text(
-            text = name,
+            text = state.name,
             fontSize = 20.sp,
             fontWeight = FontWeight.Normal,
             maxLines = 1,
@@ -54,7 +54,7 @@ fun ViewPopup(
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = description ?: stringResource(id = R.string.empty_description),
+            text = state.description ?: stringResource(id = R.string.empty_description),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             maxLines = 4,
@@ -66,8 +66,8 @@ fun ViewPopup(
         Spacer(modifier = Modifier.height(15.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.weight?.toString() ?: state.distance?.toString() ?: "",
+            onValueChange = { onEvent(ViewPopupEvent.InputValue(it)) },
             label = {
                 Text(text = stringResource(id = R.string.weight))
             },
@@ -78,15 +78,15 @@ fun ViewPopup(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(70.dp)
         )
 
         Spacer(modifier = Modifier.height(15.dp))
 
         ToggleOption(
             name = stringResource(id = R.string.up_next_time),
-            value = false,
-            onEvent = {},
+            value = state.upNextTime,
+            onClick = { onEvent(ViewPopupEvent.UpNextTime) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -95,7 +95,7 @@ fun ViewPopup(
         ToggleOption(
             name = stringResource(id = R.string.use_time),
             value = false,
-            onEvent = {},
+            onClick = {},
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -103,7 +103,7 @@ fun ViewPopup(
 
         OutlinedTextField(
             value = "",
-            onValueChange = {},
+            onValueChange = { onEvent(ViewPopupEvent.InputValue(it)) },
             label = { Text(text = stringResource(id = R.string.time)) },
             singleLine = true,
             enabled = false,
@@ -119,7 +119,7 @@ fun ViewPopup(
         Spacer(modifier = Modifier.height(60.dp))
 
         Button(
-            onClick = { },
+            onClick = { onEvent(ViewPopupEvent.Save) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
@@ -146,43 +146,18 @@ fun ViewPopup(
     }
 }
 
-@Composable
-private fun ToggleOption(
-    name: String,
-    value: Boolean,
-    onEvent: (Event) -> Unit,
-    modifier: Modifier = Modifier
-) {
-
-    Row(
-        modifier = modifier
-            .height(40.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = name
-        )
-
-        Switch(
-            checked = value,
-            onCheckedChange = {},
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun ViewPopupPreview() {
-    ViewPopup(
-        name = "Такое-то упражнение",
-        description = null,
-        value = 123.323,
-        type = "qwq",
-        improveValue = false,
-        time = null,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp)
-    )
+//    ViewPopup(
+//        name = "Такое-то упражнение",
+//        description = null,
+//        value = 123.323,
+//        type = "qwq",
+//        improveValue = false,
+//        time = null,
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(horizontal = 20.dp)
+//    )
 }

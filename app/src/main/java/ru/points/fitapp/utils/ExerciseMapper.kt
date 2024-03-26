@@ -13,9 +13,9 @@ object ExerciseMapper {
         return ExerciseVo(
             id = value.id,
             title = value.title,
-            subtitle = if (value.weight == null) "" else "Вес ${value.weight}кг",
-            color = mapTypeToColor(value.type),
-            icon = mapTypeToIcon(value.type)
+            subtitle = if (value.value == null) "" else "Вес ${value.value}кг",
+            color = mapTypeToColor(value.discriminator),
+            icon = mapTypeToIcon(value.discriminator)
         )
     }
 

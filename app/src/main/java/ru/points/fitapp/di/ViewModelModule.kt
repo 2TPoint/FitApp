@@ -9,7 +9,7 @@ val viewModelModule = module {
     viewModel<ExerciseListViewModel> {
         ExerciseListViewModel(
             getExercisesUseCase = get(),
-            getExerciseUseCase = get(),
+            getExerciseByIdUseCase = get(),
             insertExerciseUseCase = get(),
             updateExerciseUseCase = get()
         )

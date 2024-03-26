@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -23,10 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.points.fitapp.R
+import ru.points.fitapp.ui.exercises.main.component.addpopup.AddPopupEvent
+import ru.points.fitapp.ui.exercises.main.component.addpopup.AddPopupState
 import ru.points.fitapp.utils.Event
 
 @Composable
 fun AddPopup(
+    state: AddPopupState,
+    onEvent: (Event) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -34,8 +36,8 @@ fun AddPopup(
         modifier = modifier,
     ) {
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.name ?: "",
+            onValueChange = { onEvent(AddPopupEvent.InputName(it)) },
             label = { Text(text = stringResource(id = R.string.exercise_name)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -44,15 +46,15 @@ fun AddPopup(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(70.dp)
         )
 
         Spacer(modifier = Modifier.height(30.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text(text = stringResource(id = R.string.exercise_name)) },
+            value = state.description ?: "",
+            onValueChange = { onEvent(AddPopupEvent.InputDescription(it)) },
+            label = { Text(text = stringResource(id = R.string.exercise_description)) },
             maxLines = 4,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
@@ -60,90 +62,91 @@ fun AddPopup(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(88.dp)
+                .height(200.dp)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         ToggleOption(
             name = stringResource(id = R.string.weight_exercise),
-            value = true,
-            onEvent = {},
+            value = state.useWeight,
+            onClick = { onEvent(AddPopupEvent.SwitchWeightUsing) },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.weight?.toString() ?: "",
+            onValueChange = { onEvent(AddPopupEvent.InputWeight(it)) },
             label = { Text(text = stringResource(id = R.string.weight)) },
             singleLine = true,
+            enabled = state.useWeight,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Decimal
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(70.dp)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         ToggleOption(
             name = stringResource(id = R.string.cardio_exercise),
-            value = false,
-            onEvent = {},
+            value = state.useDistance,
+            onClick = { onEvent(AddPopupEvent.SwitchDistanceUsing) },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.distance?.toString() ?: "",
+            onValueChange = { onEvent(AddPopupEvent.InputDistance(it)) },
             label = { Text(text = stringResource(id = R.string.distance)) },
             singleLine = true,
-            enabled = false,
+            enabled = state.useDistance,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Decimal
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(70.dp),
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         ToggleOption(
             name = stringResource(id = R.string.use_time),
-            value = false,
-            onEvent = {},
+            value = state.useTime,
+            onClick = { onEvent(AddPopupEvent.SwitchTimeUsing) },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.time?.toString() ?: "",
+            onValueChange = { onEvent(AddPopupEvent.InputTime(it)) },
             label = { Text(text = stringResource(id = R.string.time)) },
             singleLine = true,
-            enabled = false,
+            enabled = state.useTime,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
                 keyboardType = KeyboardType.Decimal
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(70.dp)
         )
 
         Spacer(modifier = Modifier.height(15.dp))
 
         Button(
-            onClick = { },
+            onClick = { onEvent(AddPopupEvent.Save) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
@@ -157,10 +160,10 @@ fun AddPopup(
 }
 
 @Composable
-private fun ToggleOption(
+fun ToggleOption(
     name: String,
     value: Boolean,
-    onEvent: (Event) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -176,7 +179,7 @@ private fun ToggleOption(
 
         Switch(
             checked = value,
-            onCheckedChange = {},
+            onCheckedChange = { onClick() },
         )
     }
 }
@@ -184,9 +187,9 @@ private fun ToggleOption(
 @Preview(showBackground = true)
 @Composable
 fun AddPopupPreview() {
-    AddPopup(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp)
-    )
+//    AddPopup(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(horizontal = 20.dp)
+//    )
 }

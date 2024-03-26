@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -45,47 +46,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
 import ru.points.fitapp.R
-import ru.points.fitapp.ui.exercises.main.component.Exercise
+import ru.points.fitapp.data.entity.Exercise
+import ru.points.fitapp.ui.exercises.main.component.ExerciseEvent
 import ru.points.fitapp.ui.exercises.main.component.ExerciseListState
 import ru.points.fitapp.ui.exercises.main.component.ExerciseListViewModel
+import ru.points.fitapp.ui.exercises.main.component.addpopup.AddPopupEvent
+import ru.points.fitapp.ui.exercises.main.component.viewpopup.ViewPopupEvent
 import ru.points.fitapp.ui.exercises.popup.add.AddPopup
 import ru.points.fitapp.ui.exercises.popup.view.ViewPopup
 import ru.points.fitapp.utils.Event
-
-val list = listOf(
-    Exercise(
-        id = 1,
-        name = "Анжумания",
-        description = null,
-        value = 123.0,
-        time = null,
-        improveValue = false
-    ),
-    Exercise(
-        id = 2,
-        name = "Анжумания",
-        description = "Очень классное описание прям не могу",
-        value = 123.0,
-        time = null,
-        improveValue = false
-    ),
-    Exercise(
-        id = 3,
-        name = "Анжумания",
-        description = null,
-        value = 123.0,
-        time = 123,
-        improveValue = false
-    ),
-    Exercise(
-        id = 4,
-        name = "Анжумания",
-        description = null,
-        value = 123.0,
-        time = null,
-        improveValue = true
-    )
-)
 
 @Composable
 fun ExercisesScreenController(
@@ -122,8 +91,6 @@ private fun ExerciseScreen(
             selectedTabIndex = pagerState.currentPage
         }
     }
-
-    var showAddPopup by remember { mutableStateOf(false) }
     var showViewPopup by remember { mutableStateOf(false) }
 
     Column(
@@ -149,42 +116,46 @@ private fun ExerciseScreen(
                 .padding(horizontal = 20.dp)
         ) { index: Int ->
             when (index) {
-                1 -> ExercisesVerticalGrid(list = list)
+                1 -> ExercisesVerticalGrid(
+                    list = state.list,
+                    onEvent = onEvent,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }
 
+    FloatingActionButton(
+        onClick = { onEvent(AddPopupEvent.ChangeVisibility) },
+    ) {}
+
     val viewPopupState = rememberModalBottomSheetState()
 
-    if (showViewPopup) {
-        showAddPopup = false
+    if (state.viewPopupState.isShowed) {
         ModalBottomSheet(
             sheetState = viewPopupState,
-            onDismissRequest = { showViewPopup = false },
+            onDismissRequest = { onEvent(ViewPopupEvent.ChangeVisibility) },
         ) {
             ViewPopup(
-                name = "Какое-то упражнение",
-                description = null,
-                value = 123.321,
-                type = "wew",
-                improveValue = false,
-                time = null,
+                state = state.viewPopupState,
+                onEvent = onEvent,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp, vertical = 0.dp)
+                    .padding(horizontal = 20.dp)
             )
         }
     }
 
-    if (showAddPopup) {
-        showAddPopup = false
+    if (state.addPopupState.isShowed) {
         ModalBottomSheet(
-            onDismissRequest = { showAddPopup = false }
+            onDismissRequest = { onEvent(AddPopupEvent.ChangeVisibility) }
         ) {
             AddPopup(
+                state = state.addPopupState,
+                onEvent = onEvent,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp, vertical = 0.dp)
+                    .padding(horizontal = 20.dp)
             )
         }
     }
@@ -192,7 +163,7 @@ private fun ExerciseScreen(
 
 
 @Composable
-fun ExerciseCard(
+private fun ExerciseCard(
     name: String,
     description: String?,
     value: String,
@@ -277,8 +248,9 @@ fun ExerciseCard(
 }
 
 @Composable
-fun ExercisesVerticalGrid(
+private fun ExercisesVerticalGrid(
     list: List<Exercise>,
+    onEvent: (Event) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -292,11 +264,11 @@ fun ExercisesVerticalGrid(
             key = { item -> item.id }
         ) { exercise ->
             ExerciseCard(
-                name = exercise.name,
+                name = exercise.title,
                 description = exercise.description,
                 value = exercise.value.toString(),
                 time = exercise.time?.toString(),
-                onClick = { /*TODO*/ },
+                onClick = { onEvent(ExerciseEvent.SelectCard(exercise.id)) },
                 modifier = Modifier.size(width = 178.dp, height = 172.dp)
             )
         }
@@ -305,7 +277,7 @@ fun ExercisesVerticalGrid(
 
 @Preview(name = "Дефолт карточка")
 @Composable
-fun ExerciseCardPreviewFirst() {
+private fun ExerciseCardPreviewFirst() {
     ExerciseCard(
         name = "Анжумания",
         value = "999.999 кг",
@@ -318,7 +290,7 @@ fun ExerciseCardPreviewFirst() {
 
 @Preview(name = "Карточка с бустом")
 @Composable
-fun ExerciseCardPreviewSecond() {
+private fun ExerciseCardPreviewSecond() {
     ExerciseCard(
         name = "Анжумания",
         value = "999.999 кг",
@@ -335,7 +307,7 @@ fun ExerciseCardPreviewSecond() {
     showBackground = true
 )
 @Composable
-fun ExerciseScreenPreview() {
+private fun ExerciseScreenPreview() {
     ExerciseScreen(
         state = ExerciseListState(),
         onEvent = {},
