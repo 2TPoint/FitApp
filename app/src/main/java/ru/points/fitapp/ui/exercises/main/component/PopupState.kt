@@ -1,4 +1,4 @@
-package ru.points.fitapp.ui.exercises.exercise_list.component
+package ru.points.fitapp.ui.exercises.main.component
 
 data class PopupState(
     val selectedId: Long? = null,

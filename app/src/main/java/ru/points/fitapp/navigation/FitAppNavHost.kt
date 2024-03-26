@@ -9,8 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.koin.androidx.compose.getViewModel
-import ru.points.fitapp.ui.exercises.exercise_list.component.ExerciseListViewModel
-import ru.points.fitapp.ui.exercises.exercise_list.screen.ExercisesScreenController
+import ru.points.fitapp.ui.exercises.main.component.ExerciseListViewModel
+import ru.points.fitapp.ui.exercises.main.screen.ExercisesScreenController
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.ui.settings.screen.SettingsScreenController
 

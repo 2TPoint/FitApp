@@ -3,24 +3,21 @@ package ru.points.fitapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ScubaDiving
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -29,7 +26,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.points.fitapp.navigation.Destinations
 import ru.points.fitapp.navigation.FitAppNavHost
-import ru.points.fitapp.ui.exercises.exercise_list.screen.ExercisesScreenController
 import ru.points.fitapp.ui.theme.FitAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,7 +56,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 )
                             )
-                        }
+                        },
                     ) { paddingValues ->
                         FitAppNavHost(controller = navHostController, paddingValues = paddingValues)
                     }
