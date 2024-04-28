@@ -18,6 +18,16 @@ import ru.points.fitapp.domain.use_case_interface.UpdateExerciseUseCase
 import ru.points.fitapp.utils.Event
 import ru.points.fitapp.utils.EventListener
 
+/**
+ * @file ExerciseListViewModel.kt
+ * @brief ViewModel для управления состоянием списка упражнений.
+ *
+ * Этот ViewModel управляет состоянием списка упражнений, включая список упражнений,
+ * флаг показа всплывающего окна и состояние всплывающего окна. Он также обрабатывает события, связанные с
+ * добавлением, редактированием и сохранением упражнений.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 class ExerciseListViewModel(
     private val getExercisesUseCase: GetExercisesUseCase,
     private val getExerciseUseCase: GetExerciseUseCase,
@@ -47,6 +57,11 @@ class ExerciseListViewModel(
         initialValue = ExerciseListState()
     )
 
+    /**
+     * Обрабатывает события, связанные со списком упражнений и всплывающим окном.
+     *
+     * @param event Событие для обработки.
+     */
     override fun handle(event: Event) {
         when (event) {
             is ExerciseListEvent.UpdatePopupShowedState -> {
@@ -78,6 +93,11 @@ class ExerciseListViewModel(
         }
     }
 
+    /**
+     * Обновляет тип упражнения в состоянии всплывающего окна.
+     *
+     * @param value Новый тип упражнения.
+     */
     private fun updatePopupStateType(
         value: Exercise.Type
     ) {
@@ -86,6 +106,12 @@ class ExerciseListViewModel(
         }
     }
 
+    /**
+     * Обновляет состояние всплывающего окна, включая флаг показа и данные упражнения.
+     *
+     * @param isShowed Флаг показа всплывающего окна.
+     * @param event Событие, содержащее данные для обновления.
+     */
     private fun updatePopupState(
         isShowed: Boolean,
         event: ExerciseListEvent.UpdatePopupShowedState
@@ -102,6 +128,11 @@ class ExerciseListViewModel(
         }
     }
 
+    /**
+     * Подготавливает всплывающее окно для редактирования существующего упражнения.
+     *
+     * @param id Идентификатор упражнения для редактирования.
+     */
     private fun preparePopupForEdit(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             getExerciseUseCase.handle(id = id).collect { exercise ->
@@ -118,30 +149,51 @@ class ExerciseListViewModel(
         }
     }
 
+    /**
+     * Подготавливает всплывающее окно для создания нового упражнения.
+     */
     private fun preparePopupForCreate() {
         _popupState.update {
             PopupState()
         }
     }
 
+    /**
+     * Обновляет название упражнения в состоянии всплывающего окна.
+     *
+     * @param value Новое название упражнения.
+     */
     private fun updatePopupStateName(value: String) {
         _popupState.update {
             it.copy(name = value)
         }
     }
 
+    /**
+     * Обновляет описание упражнения в состоянии всплывающего окна.
+     *
+     * @param value Новое описание упражнения.
+     */
     private fun updatePopupStateDescription(value: String) {
         _popupState.update {
             it.copy(description = value)
         }
     }
 
+    /**
+     * Обновляет вес упражнения в состоянии всплывающего окна.
+     *
+     * @param value Новый вес упражнения.
+     */
     private fun updatePopupStateWeight(value: String) {
         _popupState.update {
             it.copy(weight = value)
         }
     }
 
+    /**
+     * Сохраняет или обновляет упражнение в зависимости от его текущего состояния.
+     */
     private fun upsertExercise() {
         CoroutineScope(Dispatchers.IO).launch {
             if (_popupState.value.selectedId == null) {

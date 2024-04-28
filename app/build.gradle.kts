@@ -1,7 +1,10 @@
+import org.jetbrains.kotlin.fir.declarations.builder.buildScript
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("org.ysb33r.doxygen") version "1.0.3"
 }
 
 android {
@@ -96,3 +99,17 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+buildscript {
+    repositories {
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
+    dependencies {
+        classpath("org.ysb33r.gradle:doxygen-gradle-plugin:1.0.3")
+    }
+}
+
+apply(plugin = "org.ysb33r.doxygen")
+

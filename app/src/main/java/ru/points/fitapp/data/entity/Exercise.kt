@@ -4,6 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * @file Exercise.kt
+ * @brief Класс, представляющий упражнение в приложении FitApp.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ * @version 1.0
+ */
 @Entity(
     tableName = "exercise"
 )
@@ -18,9 +25,12 @@ data class Exercise(
     val weight: Float? = null,
     @ColumnInfo(name = "upNextTime")
     val upNextTime: Boolean? = false,
-    @ColumnInfo(name = "type", )
+    @ColumnInfo(name = "type")
     val type: Type = Type.STRENGTH
 ) {
+    /**
+     * Перечисление типов упражнений.
+     */
     enum class Type {
         STRENGTH,
         CARDIO

@@ -70,6 +70,18 @@ fun Preview() {
     )
 }
 
+/**
+ * @file ExercisesScreenController.kt
+ * @brief Composable функция для отображения экрана списка упражнений.
+ *
+ * Эта функция использует ViewModel для управления состоянием списка упражнений и отображает
+ * список упражнений, а также всплывающее окно для добавления или редактирования упражнения.
+ *
+ * @param modifier Модификатор для настройки внешнего вида.
+ * @param viewModel ViewModel для управления состоянием списка упражнений.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 fun ExercisesScreenController(
     modifier: Modifier = Modifier,
@@ -82,7 +94,20 @@ fun ExercisesScreenController(
     )
 }
 
-
+/**
+ * @file ExercisesScreenController.kt
+ * @brief Composable функция для отображения списка упражнений.
+ *
+ * Эта функция отображает список упражнений, используя LazyColumn для эффективного
+ * отображения больших списков. Она также обрабатывает события, связанные с
+ * добавлением или редактированием упражнения, через всплывающее окно.
+ *
+ * @param state Состояние списка упражнений.
+ * @param onEvent Функция обратного вызова для обработки событий.
+ * @param modifier Модификатор для настройки внешнего вида.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExercisesScreen(
@@ -149,6 +174,23 @@ private fun ExercisesScreen(
     }
 }
 
+/**
+ * @file ExercisesScreenController.kt
+ * @brief Composable функция для отображения элемента списка упражнений.
+ *
+ * Эта функция отображает информацию об одном упражнении, включая его название,
+ * описание, вес и флаг "Следующее". Она также позволяет пользователю
+ * нажать на элемент списка для редактирования упражнения.
+ *
+ * @param title Название упражнения.
+ * @param description Описание упражнения.
+ * @param weight Вес упражнения.
+ * @param upNextTime Флаг, указывающий, должно ли упражнение быть добавлено в список "Следующее".
+ * @param color Цвет фона элемента списка.
+ * @param modifier Модификатор для настройки внешнего вида.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 private fun ExerciseListItem(
     title: String,
@@ -241,6 +283,16 @@ private fun ExerciseListItem(
     }
 }
 
+/**
+ * @file ExercisesScreenController.kt
+ * @brief Composable функция для отображения параметра времени в круге.
+ *
+ * Эта функция отображает параметр времени в виде круглого значка с текстом.
+ *
+ * @param time Время для отображения.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 fun RoundTimeParam(
     time: String
