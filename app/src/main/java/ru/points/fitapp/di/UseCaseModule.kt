@@ -1,7 +1,7 @@
 package ru.points.fitapp.di
 
-import com.example.surimusakotlin.domain.usecase.search.GetFoodInstantResponceByQueryUseCase
-import com.example.surimusakotlin.domain.usecase.search.GetNutritionsForCommonListUseCase
+import ru.points.fitapp.domain.exercises.usecase.GetFoodInstantResponceByQueryUseCase
+import ru.points.fitapp.domain.exercises.usecase.GetNutritionsForCommonListUseCase
 import org.koin.dsl.module
 import ru.points.fitapp.domain.exercises.usecase.implementations.GetExerciseByIdUseCaseImpl
 import ru.points.fitapp.domain.exercises.usecase.implementations.GetExercisesUseCaseImpl

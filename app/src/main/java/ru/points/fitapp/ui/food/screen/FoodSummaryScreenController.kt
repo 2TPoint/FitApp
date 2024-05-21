@@ -19,8 +19,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,19 +29,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
+import ru.points.fitapp.ui.food.component.FoodSummaryState
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 
 @Composable
 fun FoodSummaryScreenController(
-    viewModel: FoodSummaryViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
+    viewModel: FoodSummaryViewModel = koinViewModel(),
 ) {
-
-    Box(
-        modifier = Modifier
+    FoodSummaryScreen(
+        state = viewModel.state.collectAsState().value,
+        modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF2C2C2C))
             .padding(16.dp)
+    )
+}
+
+@Composable
+private fun FoodSummaryScreen(
+    state: FoodSummaryState,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
     ) {
         Column {
             TopAppBar(
@@ -69,28 +80,34 @@ fun FoodSummaryScreenController(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text("Сводка", fontSize = 24.sp, color = Color.White)
+
                     Spacer(Modifier.height(24.dp))
+
                     CircularProgressIndicator(
                         progress = 1f,
                         color = Color(0xFF6D48E5),
                         strokeWidth = 8.dp,
                         modifier = Modifier.size(200.dp)
                     )
+
                     Spacer(Modifier.height(16.dp))
+
                     Text(
-                        "1664 Съедено",
+                        "${state.calories} Съедено",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
+
                     Spacer(Modifier.height(16.dp))
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        SummaryItem(label = "Углеводы", value = "183/234г")
-                        SummaryItem(label = "Белки", value = "54/94г")
-                        SummaryItem(label = "Жиры", value = "15/62г")
+                        SummaryItem(label = "Углеводы", value = "${state.carbohydrates}г")
+                        SummaryItem(label = "Белки", value = "${state.proteins}г")
+                        SummaryItem(label = "Жиры", value = "${state.fats}г")
                     }
                 }
             }
@@ -99,7 +116,7 @@ fun FoodSummaryScreenController(
 }
 
 @Composable
-fun SummaryItem(label: String, value: String) {
+private fun SummaryItem(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(value, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Medium)
         Text(label, color = Color.Gray, fontSize = 14.sp)
@@ -108,6 +125,6 @@ fun SummaryItem(label: String, value: String) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewDailySummaryScreen() {
+private fun PreviewDailySummaryScreen() {
     FoodSummaryScreenController()
 }

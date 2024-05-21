@@ -1,9 +1,9 @@
-package com.example.surimusakotlin.domain.usecase.search
+package ru.points.fitapp.domain.exercises.usecase
 
-import com.example.surimusakotlin.domain.model.FoodInstant
 import retrofit2.Response
-import retrofit2.http.Query
+import ru.points.fitapp.data.entity.Food
 import ru.points.fitapp.data.retrofit.FoodRepositoryInterface
+import ru.points.fitapp.data.retrofit.api.model.FoodInstant
 
 class GetFoodInstantResponceByQueryUseCase(private val foodRepositoryInterface: FoodRepositoryInterface) {
 
