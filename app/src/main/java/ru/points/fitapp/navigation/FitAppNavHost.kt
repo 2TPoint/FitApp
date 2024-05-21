@@ -11,6 +11,8 @@ import androidx.navigation.compose.composable
 import org.koin.androidx.compose.getViewModel
 import ru.points.fitapp.ui.exercises.main.component.ExerciseListViewModel
 import ru.points.fitapp.ui.exercises.main.screen.ExercisesScreenController
+import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
+import ru.points.fitapp.ui.food.screen.FoodSummaryScreenController
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.ui.settings.screen.SettingsScreenController
 
@@ -39,6 +41,15 @@ fun FitAppNavHost(
             SettingsScreenController(
                 modifier = Modifier.fillMaxSize(),
                 viewModel = getViewModel<SettingsViewModel>()
+            )
+        }
+
+        composable(
+            route = Destinations.FOOD_SUMMARY_PAGE,
+        ) {
+            FoodSummaryScreenController(
+                modifier = Modifier.fillMaxSize(),
+                viewModel = getViewModel<FoodSummaryViewModel>()
             )
         }
     }
