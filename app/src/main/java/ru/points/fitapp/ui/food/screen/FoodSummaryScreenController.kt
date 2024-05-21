@@ -24,10 +24,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
+import ru.points.fitapp.R
 import ru.points.fitapp.navigation.Destinations.FOOD_SEARCH_PAGE
 import ru.points.fitapp.ui.food.component.FoodSummaryState
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
@@ -59,7 +61,12 @@ private fun FoodSummaryScreen(
     ) {
         Column {
             TopAppBar(
-                title = { Text("Сегодня", color = Color.White) },
+                title = {
+                    Text(
+                        stringResource(R.string.todays_products_consumed),
+                        color = Color.White
+                    )
+                },
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp,
                 actions = {
@@ -72,7 +79,9 @@ private fun FoodSummaryScreen(
                     }
                 }
             )
+
             Spacer(Modifier.height(16.dp))
+
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 backgroundColor = Color(0xFF3C3C4E),
@@ -82,7 +91,7 @@ private fun FoodSummaryScreen(
                     modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Сводка", fontSize = 24.sp, color = Color.White)
+                    Text(stringResource(R.string.statistic), fontSize = 24.sp, color = Color.White)
 
                     Spacer(Modifier.height(24.dp))
 
@@ -96,7 +105,7 @@ private fun FoodSummaryScreen(
                     Spacer(Modifier.height(16.dp))
 
                     Text(
-                        "${state.calories} Съедено",
+                        stringResource(R.string.calories_consumed, state.calories),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -108,9 +117,18 @@ private fun FoodSummaryScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        SummaryItem(label = "Углеводы", value = "${state.carbohydrates}г")
-                        SummaryItem(label = "Белки", value = "${state.proteins}г")
-                        SummaryItem(label = "Жиры", value = "${state.fats}г")
+                        SummaryItem(
+                            label = stringResource(R.string.carbohydrates),
+                            value = "${state.carbohydrates}г"
+                        )
+                        SummaryItem(
+                            label = stringResource(R.string.fats),
+                            value = "${state.proteins}г"
+                        )
+                        SummaryItem(
+                            label = stringResource(R.string.proteins),
+                            value = "${state.fats}г"
+                        )
                     }
                 }
             }
