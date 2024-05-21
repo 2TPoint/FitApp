@@ -2,9 +2,10 @@ package ru.points.fitapp.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import ru.points.fitapp.ui.exercises.main.component.ExerciseListViewModel
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 import ru.points.fitapp.ui.foodSearch.component.FoodSearchViewModel
+import ru.points.fitapp.ui.main.exercises.component.ExerciseListViewModel
+import ru.points.fitapp.ui.main.trainings.components.TrainingsViewModel
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 
 /**
@@ -27,9 +28,8 @@ val viewModelModule = module {
     viewModel<ExerciseListViewModel> {
         ExerciseListViewModel(
             getExercisesUseCase = get(),
-            getExerciseByIdUseCase = get(),
-            insertExerciseUseCase = get(),
-            updateExerciseUseCase = get()
+            getExerciseUseCase = get(),
+            insertExerciseUseCase = get()
         )
     }
 
@@ -54,6 +54,14 @@ val viewModelModule = module {
         FoodSearchViewModel(
             getNutritionsForCommonListUseCase = get(),
             foodDao = get()
+        )
+    }
+
+    viewModel<TrainingsViewModel> {
+        TrainingsViewModel(
+            addTrainingsUseCase = get(),
+            getTrainingsUseCase = get(),
+            getTrainingByIdUseCase = get()
         )
     }
 }

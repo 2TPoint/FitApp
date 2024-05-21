@@ -3,6 +3,7 @@ package ru.points.fitapp.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Time
 
 /**
  * @file Exercise.kt
@@ -21,18 +22,12 @@ data class Exercise(
     val title: String,
     @ColumnInfo(name = "description")
     val description: String?,
-    @ColumnInfo(name = "weight")
-    val weight: Float? = null,
+    @ColumnInfo(name = "value")
+    val value: Double = 0.0,
     @ColumnInfo(name = "upNextTime")
     val upNextTime: Boolean? = false,
-    @ColumnInfo(name = "type")
-    val type: Type = Type.STRENGTH
-) {
-    /**
-     * Перечисление типов упражнений.
-     */
-    enum class Type {
-        STRENGTH,
-        CARDIO
-    }
-}
+    @ColumnInfo(name = "time")
+    val time: Time? = null,
+    @ColumnInfo(name = "isWeight")
+    val isWeight: Boolean = true
+)

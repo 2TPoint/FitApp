@@ -2,6 +2,7 @@ package ru.points.fitapp.data.repository.irepository
 
 import kotlinx.coroutines.flow.Flow
 import ru.points.fitapp.data.entity.Exercise
+import java.sql.Time
 
 /**
  * @file ExerciseRepository.kt
@@ -36,10 +37,14 @@ interface ExerciseRepository {
      * @param upNextTime Флаг, указывающий, должно ли упражнение быть выполнено в следующий раз.
      * @param type Тип упражнения.
      */
-    fun updateExercise(id: Long, title: String, description: String?,
-                       weight: Float?,
-                       upNextTime: Boolean,
-                       type: Exercise.Type)
+    fun updateExercise(
+        id: Long,
+        title: String,
+        description: String?,
+        value: Double?,
+        upNextTime: Boolean,
+        isWeight: Boolean,
+        time: Time?)
 
     /**
      * Получает упражнение по его идентификатору.

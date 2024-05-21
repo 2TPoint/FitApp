@@ -2,7 +2,9 @@ package ru.points.fitapp.di
 
 import org.koin.dsl.module
 import ru.points.fitapp.data.repository.implementation.ExerciseRepositoryImpl
-import ru.points.fitapp.data.repository.repository.ExerciseRepository
+import ru.points.fitapp.data.repository.implementation.TrainingsRepositoryImpl
+import ru.points.fitapp.data.repository.irepository.ExerciseRepository
+import ru.points.fitapp.data.repository.repository.TrainingsRepository
 import ru.points.fitapp.data.retrofit.FoodRepositoryInterface
 import ru.points.fitapp.data.retrofit.repository.FoodRepository
 
@@ -26,10 +28,15 @@ val repositoryModule = module {
      */
     single<ExerciseRepository> {
         ExerciseRepositoryImpl(
-            dao = get()
+            database = get()
         )
     }
     single <FoodRepositoryInterface>{
         FoodRepository()
+    }
+    single<TrainingsRepository> {
+        TrainingsRepositoryImpl(
+            database = get()
+        )
     }
 }

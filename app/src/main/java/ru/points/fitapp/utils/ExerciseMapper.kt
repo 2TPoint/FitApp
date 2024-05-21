@@ -26,9 +26,9 @@ object ExerciseMapper {
             id = value.id,
             title = value.title,
             description = value.description ?: "",
-            value = "${(value.weight ?: 0f)} ${mapTypeToStr(value.type)}" ,
+            value = "${(value.value)} ${mapTypeToStr(value.isWeight)}" ,
             upNextTime = value.upNextTime ?: false,
-            color = mapTypeToColor(value.type),
+            color = mapTypeToColor(value.isWeight),
         )
     }
 
@@ -40,10 +40,10 @@ object ExerciseMapper {
      * @param item Тип упражнения.
      * @return Строка, представляющая единицы измерения.
      */
-    fun mapTypeToStr(item: Exercise.Type): String {
-        return when (item) {
-            Exercise.Type.CARDIO -> "мин"
-            Exercise.Type.STRENGTH -> "кг"
+    fun mapTypeToStr(weightUsed: Boolean): String {
+        return when (weightUsed) {
+            false -> "мин"
+            true -> "кг"
         }
     }
 
@@ -55,10 +55,10 @@ object ExerciseMapper {
      * @param item Тип упражнения.
      * @return Цвет, используемый для отображения типа упражнения.
      */
-    fun mapTypeToColor(item: Exercise.Type): Color {
-        return when (item) {
-            Exercise.Type.CARDIO -> Color.Green
-            Exercise.Type.STRENGTH -> Color.Red
+    fun mapTypeToColor(weightUsed: Boolean): Color {
+        return when (weightUsed) {
+            true -> Color.Red
+            false -> Color.Green
         }
     }
 }

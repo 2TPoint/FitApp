@@ -4,6 +4,7 @@ import androidx.room.Room
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import ru.points.fitapp.data.darasource.dao.FoodDao
+import ru.points.fitapp.data.darasource.dao.TrainingsDao
 import ru.points.fitapp.data.datasource.dao.ExerciseDao
 import ru.points.fitapp.data.datasource.database.FitAppDatabase
 
@@ -30,7 +31,9 @@ val databaseModule = module {
             context = androidContext(),
             klass = FitAppDatabase::class.java,
             name = "FitAppDatabase.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     factory<ExerciseDao> {
@@ -39,5 +42,9 @@ val databaseModule = module {
 
     factory<FoodDao> {
         get<FitAppDatabase>().getFoodDao()
+    }
+
+    factory<TrainingsDao> {
+        get<FitAppDatabase>().getTrainingsDao()
     }
 }

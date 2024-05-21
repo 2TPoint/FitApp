@@ -3,9 +3,9 @@ package ru.points.fitapp.data.datasource.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import ru.points.fitapp.data.entity.Exercise
+import java.sql.Time
 
 /**
  * @file ExerciseDao.kt
@@ -43,11 +43,22 @@ interface ExerciseDao {
      * @param upNextTime Флаг, указывающий, должно ли упражнение быть усложнено в следующий раз.
      * @param type Тип упражнения.
      */
-    @Query("UPDATE exercise SET title = :title, description = :description, weight = :weight, upNextTime = :upNextTime, type = :type WHERE id = :id ")
-    fun updateExercise(id: Long, title: String, description: String?,
-                       weight: Float?,
-                       upNextTime: Boolean,
-                       type: Exercise.Type)
+    @Query(
+        "UPDATE exercise SET title = :title, " +
+                "description = :description, " +
+                "value = :value, " +
+                "upNextTime = :upNextTime, " +
+                "isWeight = :isWeight, time = :time WHERE id = :id "
+    )
+    fun updateExercise(
+        id: Long,
+        title: String,
+        description: String?,
+        value: Double?,
+        upNextTime: Boolean,
+        time: Time?,
+        isWeight: Boolean
+        )
 
     /**
      * Получает упражнение по его идентификатору.

@@ -1,23 +1,22 @@
 package ru.points.fitapp.di
 
 import org.koin.dsl.module
-import ru.points.fitapp.domain.exercises.usecase.GetFoodInstantResponceByQueryUseCase
-import ru.points.fitapp.domain.exercises.usecase.GetNutritionsForCommonListUseCase
-import ru.points.fitapp.domain.exercises.usecase.implementations.GetExerciseByIdUseCaseImpl
-import ru.points.fitapp.domain.exercises.usecase.implementations.GetExercisesUseCaseImpl
-import ru.points.fitapp.domain.exercises.usecase.implementations.InsertExerciseUseCaseImpl
-import ru.points.fitapp.domain.exercises.usecase.implementations.UpdateExerciseUseCaseImpl
-import ru.points.fitapp.domain.exercises.usecase.interfaces.GetExerciseByIdUseCase
-import ru.points.fitapp.domain.exercises.usecase.interfaces.GetExercisesUseCase
-import ru.points.fitapp.domain.exercises.usecase.interfaces.InsertExerciseUseCase
-import ru.points.fitapp.domain.exercises.usecase.interfaces.UpdateExerciseUseCase
+import ru.points.fitapp.domain.exercises.use_case_impl.GetExerciseUseCaseImpl
+import ru.points.fitapp.domain.exercises.use_case_impl.GetExercisesUseCaseImpl
+import ru.points.fitapp.domain.exercises.use_case_impl.InsertExerciseUseCaseImpl
+import ru.points.fitapp.domain.exercises.use_case_interface.GetExerciseUseCase
+import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
+import ru.points.fitapp.domain.exercises.use_case_interface.InsertExerciseUseCase
+import ru.points.fitapp.domain.food.GetFoodInstantResponceByQueryUseCase
+import ru.points.fitapp.domain.food.GetNutritionsForCommonListUseCase
+import ru.points.fitapp.domain.trainings.implementations.AddTrainingImpl
+import ru.points.fitapp.domain.trainings.implementations.GetTrainingByIdUseCaseImpl
+import ru.points.fitapp.domain.trainings.implementations.GetTrainingsUseCaseImpl
+import ru.points.fitapp.domain.trainings.interfaces.AddTraining
+import ru.points.fitapp.domain.trainings.interfaces.GetTrainingByIdUseCase
+import ru.points.fitapp.domain.trainings.interfaces.GetTrainingsUseCase
 
 val useCaseModule = module {
-    factory<GetExercisesUseCase> {
-        GetExercisesUseCaseImpl(
-            exerciseRepository = get()
-        )
-    }
 
     factory<InsertExerciseUseCase> {
         InsertExerciseUseCaseImpl(
@@ -25,14 +24,14 @@ val useCaseModule = module {
         )
     }
 
-    factory<GetExerciseByIdUseCase> {
-        GetExerciseByIdUseCaseImpl(
+    factory<GetExerciseUseCase> {
+        GetExerciseUseCaseImpl(
             exerciseRepository = get()
         )
     }
 
-    factory<UpdateExerciseUseCase> {
-        UpdateExerciseUseCaseImpl(
+    factory<GetExercisesUseCase> {
+        GetExercisesUseCaseImpl(
             exerciseRepository = get()
         )
     }
@@ -43,5 +42,17 @@ val useCaseModule = module {
 
     factory<GetNutritionsForCommonListUseCase> {
         GetNutritionsForCommonListUseCase(foodRepository = get(), getFoodInstantResponceByQueryUseCase = get())
+    }
+
+    factory<GetTrainingsUseCase> {
+        GetTrainingsUseCaseImpl(trainingsRepository = get())
+    }
+
+    factory<AddTraining> {
+        AddTrainingImpl(trainingsRepository = get())
+    }
+
+    factory<GetTrainingByIdUseCase> {
+        GetTrainingByIdUseCaseImpl(trainingsRepository = get())
     }
 }

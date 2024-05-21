@@ -9,12 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.koin.androidx.compose.getViewModel
-import ru.points.fitapp.ui.exercises.main.component.ExerciseListViewModel
-import ru.points.fitapp.ui.exercises.main.screen.ExercisesScreenController
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 import ru.points.fitapp.ui.food.screen.FoodSummaryScreenController
 import ru.points.fitapp.ui.foodSearch.component.FoodSearchViewModel
 import ru.points.fitapp.ui.foodSearch.screen.FoodSearchScreenController
+import ru.points.fitapp.ui.main.exercises.component.ExerciseListViewModel
+import ru.points.fitapp.ui.main.screen.MainScreenController
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.ui.settings.screen.SettingsScreenController
 
@@ -42,9 +42,9 @@ fun FitAppNavHost(
         composable(
             route = Destinations.EXERCISE_LIST_PAGE,
         ) {
-            ExercisesScreenController(
+            MainScreenController(
                 modifier = Modifier.fillMaxSize(),
-                viewModel = getViewModel<ExerciseListViewModel>()
+                exercisesViewModel = getViewModel<ExerciseListViewModel>()
             )
         }
 

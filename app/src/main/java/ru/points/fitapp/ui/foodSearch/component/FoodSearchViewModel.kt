@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.points.fitapp.data.darasource.dao.FoodDao
 import ru.points.fitapp.data.entity.Food
-import ru.points.fitapp.domain.exercises.usecase.GetNutritionsForCommonListUseCase
+import ru.points.fitapp.domain.food.GetNutritionsForCommonListUseCase
 import ru.points.fitapp.utils.Event
 import ru.points.fitapp.utils.EventListener
 

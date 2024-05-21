@@ -1,17 +1,10 @@
 package ru.points.fitapp.data.repository.implementation
 
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room.databaseBuilder
-import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.flow.Flow
-import ru.points.fitapp.data.datasource.dao.ExerciseDao
 import ru.points.fitapp.data.datasource.database.FitAppDatabase
 import ru.points.fitapp.data.entity.Exercise
 import ru.points.fitapp.data.repository.irepository.ExerciseRepository
-import kotlin.concurrent.Volatile
+import java.sql.Time
 
 
 /**
@@ -63,17 +56,22 @@ class ExerciseRepositoryImpl(
      * @param upNextTime Флаг, указывающий, должно ли упражнение быть выполнено в следующий раз.
      * @param type Тип упражнения.
      */
-    override fun updateExercise(id: Long, title: String, description: String?,
-                                weight: Float?,
+    override fun updateExercise(
+                                id: Long,
+                                title: String,
+                                description: String?,
+                                value: Double?,
                                 upNextTime: Boolean,
-                                type: Exercise.Type) {
+                                isWeight: Boolean,
+                                time: Time?) {
         database.getExerciseDao().updateExercise(
             id = id,
             title = title,
             description = description,
-            weight = weight,
+            value = value,
             upNextTime = upNextTime,
-            type = type
+            isWeight = isWeight,
+            time = time
         )
     }
 }
