@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">FitApp</string>
+    
+    <!-- Exercises -->
+    <string name="programms">Программы</string>
+    <string name="exercises">Упражнения</string>
+
+    <!-- Exercise Card -->
+    <string name="empty_description">Описание отсутствует</string>
+
+    <!-- Popup Add/Edit -->
+    <string name="exercise_name">Название упражнения</string>
+    <string name="exercise_description">Описание упражнения</string>
+    <string name="weight_exercise">Весовое упражнение</string>
+    <string name="weight">Вес</string>
+    <string name="distance">Расстояние</string>
+    <string name="cardio_exercise">Упражнение на выносливость</string>
+    <string name="use_time">Использовать время</string>
+    <string name="time">Время</string>
+    <string name="save">Сохранить</string>
+
+    <!-- Popup view -->
+    <string name="up_next_time">Поднять в следующий раз</string>
+    <string name="edit">Редактировать</string>
+    
+    
+    <!-- Settings -->
+    <string name="weight_unit_of_measure">Весовая единица измерения</string>
+    <string name="distance_unit_of_measure">Временная единица измерения</string>
+    <string name="time_unit_of_measure">Единица измерения расстояния</string>
+    <string name="kg">кг.</string>
+    <string name="min">мин.</string>
+    <string name="meter">м.</string>
+    <string name="use_dark_theme">Использовать темную тему</string>
+    <string name="about_app">О приложении</string>
+    <string name="delete_all_data">Удалить все данные</string>
 </resources>

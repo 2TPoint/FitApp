@@ -19,4 +19,6 @@ object Destinations {
      * Маршрут к странице настроек.
      */
     const val SETTINGS_PAGE = "SETTINGS_PAGE"
+    const val FOOD_SUMMARY_PAGE = "FOOD_SUMMARY_PAGE"
+    const val FOOD_SEARCH_PAGE = "FOOD_SEARCH_PAGE"
 }
