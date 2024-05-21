@@ -32,6 +32,14 @@ import ru.points.fitapp.navigation.FitAppNavHost
 import ru.points.fitapp.ui.exercises.exercise_list.screen.ExercisesScreenController
 import ru.points.fitapp.ui.theme.FitAppTheme
 
+/**
+ * @file MainActivity.kt
+ * @brief Главная активность приложения FitApp.
+ *
+ * Обеспечивает основной пользовательский интерфейс приложения, включая навигацию и отображение экранов.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +78,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * @file MainActivity.kt
+ * @brief Компонент нижней навигационной панели.
+ *
+ * Отображает нижнюю навигационную панель с элементами навигации.
+ *
+ * @param navController Контроллер навигации для перехода между экранами.
+ * @param screens Список экранов для отображения в нижней навигационной панели.
+ * @param modifier Модификатор для настройки внешнего вида компонента.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 private fun AppCashBottomNavigationBar(
     navController: NavController,
@@ -104,6 +124,18 @@ private fun AppCashBottomNavigationBar(
     }
 }
 
+/**
+ * @file MainActivity.kt
+ * @brief Данные экрана.
+ *
+ * Содержит данные для отображения элемента навигационной панели.
+ *
+ * @param icon Иконка элемента.
+ * @param title Заголовок элемента.
+ * @param route Маршрут для перехода к экрану.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 private data class Screen(
     val icon: ImageVector,
     val title: String,

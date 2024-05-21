@@ -30,6 +30,17 @@ import ru.points.fitapp.ui.settings.component.SettingsState
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.utils.Event
 
+/**
+ * @file SettingsScreenController.kt
+ * @brief Контроллер экрана настроек.
+ *
+ * Отображает экран настроек и обрабатывает события, связанные с изменением настроек.
+ *
+ * @param modifier Модификатор для настройки внешнего вида экрана.
+ * @param viewModel ViewModel для управления состоянием настроек.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 fun SettingsScreenController(
     modifier: Modifier = Modifier,
@@ -42,6 +53,18 @@ fun SettingsScreenController(
     )
 }
 
+/**
+ * @file SettingsScreenController.kt
+ * @brief Экран настроек.
+ *
+ * Отображает элемент управления для настроек приложения.
+ *
+ * @param state Текущее состояние настроек.
+ * @param onEvent Функция для обработки событий настроек.
+ * @param modifier Модификатор для настройки внешнего вида экрана.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 private fun SettingsScreen(
     state: SettingsState,
@@ -107,6 +130,16 @@ private fun SettingsScreen(
     }
 }
 
+/**
+ * @file SettingsScreenController.kt
+ * @brief Компонент достижения.
+ *
+ * Отображает визуальное представление достижения.
+ *
+ * @param modifier Модификатор для настройки внешнего вида компонента.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 private fun Achievement(
     modifier: Modifier = Modifier
@@ -118,6 +151,21 @@ private fun Achievement(
     )
 }
 
+/**
+ * @file SettingsScreenController.kt
+ * @brief Компонент переключателя настроек.
+ *
+ * Отображает переключатель для изменения настроек приложения.
+ *
+ * @param name Название настройки.
+ * @param value Текущее значение настройки.
+ * @param backgroundColor Цвет фона компонента.
+ * @param onEvent Функция для обработки событий настроек.
+ * @param toggleType Тип переключателя.
+ * @param modifier Модификатор для настройки внешнего вида компонента.
+ *
+ * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
+ */
 @Composable
 private fun ToggleOption(
     name: String,
