@@ -1,12 +1,8 @@
 package ru.points.fitapp.data.retrofit
 
-import com.example.surimusakotlin.data.api.RetrofitFoodInstance
-import com.example.surimusakotlin.domain.model.FoodInstant
-import com.example.surimusakotlin.domain.model.Nutrition
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 import retrofit2.Response
+import ru.points.fitapp.data.retrofit.api.model.FoodInstant
+import ru.points.fitapp.data.retrofit.api.model.Nutrition
 
 interface FoodRepositoryInterface {
 

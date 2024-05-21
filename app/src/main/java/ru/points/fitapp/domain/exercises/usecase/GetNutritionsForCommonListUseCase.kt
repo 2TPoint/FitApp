@@ -1,10 +1,12 @@
-package com.example.surimusakotlin.domain.usecase.search
+package ru.points.fitapp.domain.exercises.usecase
 
 import com.example.surimusakotlin.domain.model.Common
 import com.example.surimusakotlin.domain.model.Food
 import ru.points.fitapp.data.retrofit.FoodRepositoryInterface
 
-class GetNutritionsForCommonListUseCase(private val foodRepositoryInterface: FoodRepositoryInterface) {
+class GetNutritionsForCommonListUseCase(
+    private val foodRepositoryInterface: FoodRepositoryInterface
+) {
 
     suspend operator fun invoke(foodList: List<Common>): Result<List<Food>>{
         return try {
@@ -24,7 +26,7 @@ class GetNutritionsForCommonListUseCase(private val foodRepositoryInterface: Foo
                 }
             }
             Result.success(tempMutableList)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Result.failure(e)
         }
     }

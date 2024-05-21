@@ -1,8 +1,7 @@
 package com.example.surimusakotlin.data.api
 
-import com.example.surimusakotlin.domain.model.Food
-import com.example.surimusakotlin.domain.model.FoodInstant
-import com.example.surimusakotlin.domain.model.Nutrition
+import ru.points.fitapp.data.retrofit.api.model.FoodInstant
+import ru.points.fitapp.data.retrofit.api.model.Nutrition
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body

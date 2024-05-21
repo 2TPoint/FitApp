@@ -21,6 +21,8 @@ val viewModelModule = module {
     }
 
     viewModel<FoodSummaryViewModel> {
-        FoodSummaryViewModel()
+        FoodSummaryViewModel(
+            foodDao = get()
+        )
     }
 }
