@@ -17,8 +17,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
@@ -63,10 +63,11 @@ private fun FoodSearchScreen(
     Column(
         modifier = modifier
     ) {
-        TextField(
+
+        OutlinedTextField(
             value = searchQuery.value,
             onValueChange = { searchQuery.value = it },
-            placeholder = { Text(text = stringResource(R.string.Search)) },
+            label = { Text(text = stringResource(id = R.string.Search)) },
             keyboardActions = KeyboardActions(
                 onSearch = { onEvent(FoodSearchEvents.MakeRequest(searchQuery.value)) }
             ),
@@ -74,8 +75,8 @@ private fun FoodSearchScreen(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
             ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 10.dp, start = 12.dp, end = 12.dp),
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
