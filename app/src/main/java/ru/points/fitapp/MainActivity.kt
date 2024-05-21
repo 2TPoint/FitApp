@@ -8,6 +8,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EggAlt
 import androidx.compose.material.icons.filled.ScubaDiving
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FabPosition
@@ -50,6 +51,11 @@ class MainActivity : ComponentActivity() {
                                         route = Destinations.EXERCISE_LIST_PAGE
                                     ),
                                     Screen(
+                                        icon = Icons.Default.EggAlt,
+                                        title = "Еда",
+                                        route = Destinations.FOOD_SUMMARY_PAGE
+                                    ),
+                                    Screen(
                                         icon = Icons.Default.Settings,
                                         title = "Настройки",
                                         route = Destinations.SETTINGS_PAGE
@@ -73,28 +79,22 @@ private fun AppCashBottomNavigationBar(
     modifier: Modifier = Modifier
 ) {
     BottomNavigation(
-        modifier = modifier,
-        backgroundColor = Color.LightGray
+        modifier = modifier
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         screens.forEach { screenItem ->
             BottomNavigationItem(
                 selected = screenItem.route == currentDestination?.route,
-                onClick = {
-                    navController.navigate(screenItem.route)
-                },
+                onClick = { navController.navigate(screenItem.route) },
                 icon = {
                     Icon(
                         screenItem.icon,
                         contentDescription = null
                     )
                 },
-                label = {
-                    Text(
-                        text = screenItem.title
-                    )
-                }
+                label = { Text(text = screenItem.title) },
+                alwaysShowLabel = false
             )
         }
     }

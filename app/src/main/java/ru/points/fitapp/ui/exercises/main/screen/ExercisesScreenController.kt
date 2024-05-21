@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +20,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Tab
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -93,43 +97,53 @@ private fun ExerciseScreen(
     }
     var showViewPopup by remember { mutableStateOf(false) }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
-        modifier = modifier
-    ) {
-        TabRow(
-            selectedTabIndex = selectedTabIndex,
-            modifier = Modifier.fillMaxWidth()
+    Box(modifier = modifier, Alignment.Center) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier.fillMaxSize()
         ) {
-            tabs.forEachIndexed { index, tab ->
-                Tab(
-                    selected = index == selectedTabIndex,
-                    onClick = { selectedTabIndex = index },
-                    text = { Text(text = tab) }
-                )
+            TabRow(
+                selectedTabIndex = selectedTabIndex,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                tabs.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = index == selectedTabIndex,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(text = tab) }
+                    )
+                }
             }
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+            ) { index: Int ->
+                when (index) {
+                    1 -> ExercisesVerticalGrid(
+                        list = state.list,
+                        onEvent = onEvent,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 20.dp)
+                    )
+                }
+            }
+
+
         }
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-        ) { index: Int ->
-            when (index) {
-                1 -> ExercisesVerticalGrid(
-                    list = state.list,
-                    onEvent = onEvent,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+
+        FloatingActionButton(
+            onClick = { onEvent(AddPopupEvent.ChangeVisibility) },
+            modifier = Modifier.align(Alignment.BottomEnd).padding(bottom = 60.dp, end = 20.dp),
+        ) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = null)
         }
     }
 
-    FloatingActionButton(
-        onClick = { onEvent(AddPopupEvent.ChangeVisibility) },
-    ) {}
-
     val viewPopupState = rememberModalBottomSheetState()
+
 
     if (state.viewPopupState.isShowed) {
         ModalBottomSheet(
