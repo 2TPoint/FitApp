@@ -25,9 +25,9 @@ fun FoodDto.mapToOtherFood() : ru.points.fitapp.data.entity.Food {
     return ru.points.fitapp.data.entity.Food(
         name = food_name,
         weight = serving_weight_grams,
-        calories = nf_calories.toLong(),
-        fats = nf_total_fat.toLong(),
-        carbohydrates = nf_total_carbohydrate.toLong(),
-        proteins = nf_protein.toLong()
+        calories = nf_calories,
+        fats = nf_total_fat,
+        carbohydrates = nf_total_carbohydrate,
+        proteins = nf_protein
     )
 }

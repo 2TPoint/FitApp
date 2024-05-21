@@ -77,7 +77,7 @@ private fun FoodSearchScreen(
 
         LazyColumn {
             items(items = state.list) { item ->
-                FoodCard(item)
+                FoodCard(item, onEvent)
             }
         }
     }
@@ -85,7 +85,10 @@ private fun FoodSearchScreen(
 
 
 @Composable
-fun FoodCard(foodItem: Food) {
+fun FoodCard(
+    foodItem: Food,
+    onEvent: (Event) -> Unit
+) {
     Card(
         backgroundColor = Color(0xFF2E3B55),
         shape = RoundedCornerShape(8.dp),
@@ -128,7 +131,7 @@ fun FoodCard(foodItem: Food) {
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            IconButton(onClick = { /* Handle add */ }, modifier = Modifier.align(Alignment.End)) {
+            IconButton(onClick = { onEvent(FoodSearchEvents.Save(foodItem)) }, modifier = Modifier.align(Alignment.End)) {
                 Icon(Icons.Default.Add, contentDescription = "Add", tint = Color.White)
             }
         }

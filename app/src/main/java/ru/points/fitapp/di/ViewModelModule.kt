@@ -29,7 +29,8 @@ val viewModelModule = module {
 
     viewModel<FoodSearchViewModel> {
         FoodSearchViewModel(
-            getNutritionsForCommonListUseCase = get()
+            getNutritionsForCommonListUseCase = get(),
+            foodDao = get()
         )
     }
 }

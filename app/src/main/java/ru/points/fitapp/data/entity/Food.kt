@@ -14,11 +14,11 @@ data class Food(
     @ColumnInfo(name = "weight")
     val weight: Double,
     @ColumnInfo(name = "calories")
-    val calories: Long,
+    val calories: Double,
     @ColumnInfo(name = "fat")
-    val fats: Long,
+    val fats: Double,
     @ColumnInfo(name = "carbohydrates")
-    val carbohydrates: Long,
+    val carbohydrates: Double,
     @ColumnInfo(name = "protein")
-    val proteins: Long
+    val proteins: Double
 )
