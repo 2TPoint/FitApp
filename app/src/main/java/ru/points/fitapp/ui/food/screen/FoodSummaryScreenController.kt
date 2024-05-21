@@ -1,7 +1,33 @@
 package ru.points.fitapp.ui.food.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 
@@ -10,4 +36,78 @@ fun FoodSummaryScreenController(
     viewModel: FoodSummaryViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
 ) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF2C2C2C))
+            .padding(16.dp)
+    ) {
+        Column {
+            TopAppBar(
+                title = { Text("Сегодня", color = Color.White) },
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp,
+                actions = {
+                    IconButton(onClick = { /* handle settings click */ }) {
+                        Icon(
+                            Icons.Filled.Add,
+                            contentDescription = "Settings",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+            Spacer(Modifier.height(16.dp))
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                backgroundColor = Color(0xFF3C3C4E),
+                elevation = 4.dp
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Сводка", fontSize = 24.sp, color = Color.White)
+                    Spacer(Modifier.height(24.dp))
+                    CircularProgressIndicator(
+                        progress = 1f,
+                        color = Color(0xFF6D48E5),
+                        strokeWidth = 8.dp,
+                        modifier = Modifier.size(200.dp)
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    Text(
+                        "1664 Съедено",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        SummaryItem(label = "Углеводы", value = "183/234г")
+                        SummaryItem(label = "Белки", value = "54/94г")
+                        SummaryItem(label = "Жиры", value = "15/62г")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SummaryItem(label: String, value: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(value, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+        Text(label, color = Color.Gray, fontSize = 14.sp)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewDailySummaryScreen() {
+    FoodSummaryScreenController()
 }
