@@ -1,8 +1,8 @@
 package ru.points.fitapp.di
 
+import org.koin.dsl.module
 import ru.points.fitapp.domain.exercises.usecase.GetFoodInstantResponceByQueryUseCase
 import ru.points.fitapp.domain.exercises.usecase.GetNutritionsForCommonListUseCase
-import org.koin.dsl.module
 import ru.points.fitapp.domain.exercises.usecase.implementations.GetExerciseByIdUseCaseImpl
 import ru.points.fitapp.domain.exercises.usecase.implementations.GetExercisesUseCaseImpl
 import ru.points.fitapp.domain.exercises.usecase.implementations.InsertExerciseUseCaseImpl
@@ -42,6 +42,6 @@ val useCaseModule = module {
     }
 
     factory<GetNutritionsForCommonListUseCase> {
-        GetNutritionsForCommonListUseCase(foodRepositoryInterface = get())
+        GetNutritionsForCommonListUseCase(foodRepository = get(), getFoodInstantResponceByQueryUseCase = get())
     }
 }

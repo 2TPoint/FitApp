@@ -25,20 +25,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
+import ru.points.fitapp.navigation.Destinations.FOOD_SEARCH_PAGE
 import ru.points.fitapp.ui.food.component.FoodSummaryState
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 
 @Composable
 fun FoodSummaryScreenController(
+    navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: FoodSummaryViewModel = koinViewModel(),
 ) {
     FoodSummaryScreen(
         state = viewModel.state.collectAsState().value,
+        navigateTo = navigateTo,
         modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF2C2C2C))
@@ -49,6 +51,7 @@ fun FoodSummaryScreenController(
 @Composable
 private fun FoodSummaryScreen(
     state: FoodSummaryState,
+    navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -60,7 +63,7 @@ private fun FoodSummaryScreen(
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp,
                 actions = {
-                    IconButton(onClick = { /* handle settings click */ }) {
+                    IconButton(onClick = { navigateTo(FOOD_SEARCH_PAGE) }) {
                         Icon(
                             Icons.Filled.Add,
                             contentDescription = "Settings",
@@ -121,10 +124,4 @@ private fun SummaryItem(label: String, value: String) {
         Text(value, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Medium)
         Text(label, color = Color.Gray, fontSize = 14.sp)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewDailySummaryScreen() {
-    FoodSummaryScreenController()
 }

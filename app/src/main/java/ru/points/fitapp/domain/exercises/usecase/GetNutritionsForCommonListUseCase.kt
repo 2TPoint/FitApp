@@ -1,33 +1,45 @@
 package ru.points.fitapp.domain.exercises.usecase
 
-import com.example.surimusakotlin.domain.model.Common
-import com.example.surimusakotlin.domain.model.Food
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.withContext
+import ru.points.fitapp.data.entity.Food
 import ru.points.fitapp.data.retrofit.FoodRepositoryInterface
+import ru.points.fitapp.data.retrofit.api.model.FoodDto
+import ru.points.fitapp.data.retrofit.api.model.mapToOtherFood
 
 class GetNutritionsForCommonListUseCase(
-    private val foodRepositoryInterface: FoodRepositoryInterface
+    private val foodRepository: FoodRepositoryInterface,
+    private val getFoodInstantResponceByQueryUseCase: GetFoodInstantResponceByQueryUseCase
 ) {
 
-    suspend operator fun invoke(foodList: List<Common>): Result<List<Food>>{
-        return try {
-            val tempMutableList = mutableListOf<Food>()
+    suspend operator fun invoke(query: String): Flow<List<Food>> {
+        return channelFlow {
+            withContext(Dispatchers.Default) {
+                try {
+                    val res = getFoodInstantResponceByQueryUseCase.invoke(query)
+                    if (!res.isSuccess) throw Exception("БЛЯТЬ ПИЗДА")
+                    val foodList = res.getOrNull()?.common ?: throw Exception("БЛЯТЬ ПИЗДА2")
 
-            foodList.take(4).forEach {
-                val additionalInfoResponse = foodRepositoryInterface.getNutritions(it.food_name)
+                    val tempMutableList = mutableListOf<FoodDto>()
 
-                if (additionalInfoResponse.isSuccessful) {
+                    foodList.take(4).forEach { common ->
+                        val additionalInfo = foodRepository.getNutritions(query = common.food_name)
 
-                    val nutrition: Food? = additionalInfoResponse.body()?.foods?.get(0)
-                    if (nutrition != null) {
-                        tempMutableList.add(nutrition)
+                        if (!additionalInfo.isSuccessful) throw Exception("Error fetching nutritions data")
+
+                        additionalInfo.body()?.foods?.first()?.let {
+                            tempMutableList.add(it)
+                        }
                     }
-                } else {
-                    return Result.failure(Exception("Error fetching nutritions data"))
+
+                    val list = tempMutableList.map { food -> food.mapToOtherFood() }
+                    send(list)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
-            Result.success(tempMutableList)
-        } catch (e: Exception) {
-            Result.failure(e)
         }
     }
 

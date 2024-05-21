@@ -13,6 +13,8 @@ import ru.points.fitapp.ui.exercises.main.component.ExerciseListViewModel
 import ru.points.fitapp.ui.exercises.main.screen.ExercisesScreenController
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 import ru.points.fitapp.ui.food.screen.FoodSummaryScreenController
+import ru.points.fitapp.ui.foodSearch.component.FoodSearchViewModel
+import ru.points.fitapp.ui.foodSearch.screen.FoodSearchScreenController
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.ui.settings.screen.SettingsScreenController
 
@@ -48,8 +50,18 @@ fun FitAppNavHost(
             route = Destinations.FOOD_SUMMARY_PAGE,
         ) {
             FoodSummaryScreenController(
+                navigateTo = controller::navigate,
                 modifier = Modifier.fillMaxSize(),
                 viewModel = getViewModel<FoodSummaryViewModel>()
+            )
+        }
+
+        composable(
+            route = Destinations.FOOD_SEARCH_PAGE,
+        ) {
+            FoodSearchScreenController(
+                modifier = Modifier.fillMaxSize(),
+                viewModel = getViewModel<FoodSearchViewModel>()
             )
         }
     }

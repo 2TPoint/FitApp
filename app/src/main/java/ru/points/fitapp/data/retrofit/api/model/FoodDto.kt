@@ -1,10 +1,11 @@
-package com.example.surimusakotlin.domain.model
+package ru.points.fitapp.data.retrofit.api.model
 
 import android.os.Parcelable
+import com.example.surimusakotlin.domain.model.Photo
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Food(
+data class FoodDto(
     val food_name: String,
     val nf_calories: Double,
     val nf_cholesterol: Double,//холестерин
@@ -19,3 +20,14 @@ data class Food(
     val photo: Photo,
     val serving_weight_grams: Double,
 ): Parcelable
+
+fun FoodDto.mapToOtherFood() : ru.points.fitapp.data.entity.Food {
+    return ru.points.fitapp.data.entity.Food(
+        name = food_name,
+        weight = serving_weight_grams,
+        calories = nf_calories.toLong(),
+        fats = nf_total_fat.toLong(),
+        carbohydrates = nf_total_carbohydrate.toLong(),
+        proteins = nf_protein.toLong()
+    )
+}
