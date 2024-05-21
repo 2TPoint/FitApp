@@ -34,4 +34,14 @@
     <string name="use_dark_theme">Использовать темную тему</string>
     <string name="about_app">О приложении</string>
     <string name="delete_all_data">Удалить все данные</string>
+    <string name="todays_products_consumed">Статистика за сегодня</string>
+    <string name="statistic">Статистика</string>
+    <string name="calories_consumed">Потреблено калорий: %1$s</string>
+    <string name="carbohydrates">Углеводы</string>
+    <string name="fats">Жиры</string>
+    <string name="proteins">Белки</string>
+    <string name="carbonates">Углеводы: %1$s</string>
+    <string name="fates">Жиры: %1$s</string>
+    <string name="proteines">Белки: %1$s</string>
+    <string name="Search">Поиск</string>
 </resources>
