@@ -70,7 +70,8 @@ val viewModelModule = module {
         CurrentTrainingViewModel(
             addNewExerciseToTrainingUseCase = get(),
             getTrainingById = get(),
-            currentId = currentId
+            currentId = currentId,
+            getExercisesUseCase = get()
         )
     }
 }

@@ -6,39 +6,44 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import ru.points.fitapp.data.vo.TrainingVo
+import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.trainings.interfaces.AddNewExerciseToTrainingUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingByIdUseCase
+import ru.points.fitapp.ui.main.trainings.components.states.CurrentTrainingState
 import ru.points.fitapp.utils.Event
 import ru.points.fitapp.utils.EventListener
 
 class CurrentTrainingViewModel(
     val addNewExerciseToTrainingUseCase: AddNewExerciseToTrainingUseCase,
     val getTrainingById: GetTrainingByIdUseCase,
+    val getExercisesUseCase: GetExercisesUseCase,
     val currentId: Long
 ) : ViewModel(), EventListener {
 
     private val _training = getTrainingById.handle(id = currentId)
 
-    val trainingsState = combine(
-        _training
+    private val _exercises = getExercisesUseCase.handle()
+
+    val trainingState = combine(
+        _training,
+        _exercises
     ) {
-        TrainingVo(
-            id = it[0].id,
-            name = it[0].name,
-            description = it[0].description,
-            time = it[0].time,
-            exercisesList = it[0].exercisesList
+        training, exercises ->
+        CurrentTrainingState(
+            training =
+            TrainingVo(
+                id = training.id,
+                name = training.name,
+                description = training.description,
+                time = training.time,
+                exercisesList = training.exercisesList
+            ),
+            allExercises = exercises
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = TrainingVo(
-            id = 0,
-            name = "",
-            description = "",
-            time = "",
-            exercisesList = mutableListOf()
-        )
+        initialValue = CurrentTrainingState()
     )
 
     override fun handle(event: Event) {
@@ -69,3 +74,4 @@ class CurrentTrainingViewModel(
 
     }
 }
+

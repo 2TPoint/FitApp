@@ -1,5 +1,6 @@
 package ru.points.fitapp.navigation
 
+import CurrentTrainingScreen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,6 @@ import ru.points.fitapp.ui.foodSearch.screen.FoodSearchScreenController
 import ru.points.fitapp.ui.main.exercises.component.ExerciseListViewModel
 import ru.points.fitapp.ui.main.screen.MainScreenController
 import ru.points.fitapp.ui.main.trainings.components.CurrentTrainingViewModel
-import ru.points.fitapp.ui.main.trainings.screen.CurrentTrainingScreen
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.ui.settings.screen.SettingsScreenController
 
