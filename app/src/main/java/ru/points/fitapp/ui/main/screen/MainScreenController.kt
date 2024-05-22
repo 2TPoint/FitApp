@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
 import ru.points.fitapp.ui.main.exercises.component.ExerciseListEvent
 import ru.points.fitapp.ui.main.exercises.component.ExerciseListState
@@ -46,7 +47,8 @@ import ru.points.fitapp.utils.Event
 fun MainScreenController(
     modifier: Modifier = Modifier,
     trainingsViewModel: TrainingsViewModel = koinViewModel(),
-    exercisesViewModel: ExerciseListViewModel = koinViewModel()
+    exercisesViewModel: ExerciseListViewModel = koinViewModel(),
+    navController: NavController
 ) {
     MainScreen(
         trainingsListState = trainingsViewModel.trainingsState.collectAsState().value,
@@ -54,7 +56,8 @@ fun MainScreenController(
         onTrainingEvent = trainingsViewModel::handle,
         onExerciseEvent = exercisesViewModel::handle,
         tabs = listOf("Программы", "Упражнения"),
-        modifier = modifier
+        modifier = modifier,
+        navController = navController
     )
 }
 
@@ -66,7 +69,8 @@ private fun MainScreen(
     onTrainingEvent: (Event) -> Unit,
     onExerciseEvent: (Event) -> Unit,
     tabs: List<String>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     var selectedTabIndex by remember { mutableIntStateOf(0) }
@@ -118,7 +122,8 @@ private fun MainScreen(
                     onEvent = onTrainingEvent,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 20.dp)
+                        .padding(top = 20.dp),
+                    navController = navController
                 )
                 1 -> ExercisesScreen(
                     list = exerciseListState.list,

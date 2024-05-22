@@ -1,6 +1,7 @@
 package ru.points.fitapp.data.vo
 
 import androidx.compose.ui.graphics.Color
+import java.sql.Time
 
 /**
  * @file ExerciseVo.kt
@@ -15,5 +16,6 @@ data class ExerciseVo(
     val description: String,
     val value: String,
     val upNextTime: Boolean,
+    val time: Time?,
     val color: Color
 )

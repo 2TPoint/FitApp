@@ -58,7 +58,6 @@ class TrainingsViewModel(
 
     }
 
-
     private fun updatePopUpShowState(event: TrainingEvent.UpdatePopupShowedState) {
         _showPopup.update { event.isShowed }
         if (event.isShowed) {

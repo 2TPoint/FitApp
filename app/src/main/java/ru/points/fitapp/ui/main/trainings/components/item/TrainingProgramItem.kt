@@ -19,17 +19,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import ru.points.fitapp.data.vo.TrainingVo
+import ru.points.fitapp.navigation.Destinations
 
 
 @Composable
-fun TrainingProgramItem(training: TrainingVo) {
+fun TrainingProgramItem(
+    training: TrainingVo,
+    navController: NavController
+) {
     Card(
         shape = RoundedCornerShape(10.dp),
         elevation = 5.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Handle click */ }
+            .clickable {
+
+            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -50,7 +57,7 @@ fun TrainingProgramItem(training: TrainingVo) {
                 modifier = Modifier
                     .size(70.dp, 30.dp)
                     .background(Color.Yellow, shape = RoundedCornerShape(50))
-                    .clickable { /* Handle click */ },
+                    .clickable { navController.navigate("${Destinations.CURRENT_TRAINING_PAGE}/${training.id.toLong()}") },
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Перейти", color = Color.Black, fontWeight = FontWeight.Bold)

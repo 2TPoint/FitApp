@@ -1,5 +1,6 @@
 package ru.points.fitapp.ui.main.trainings.components
 
+import ru.points.fitapp.data.vo.TrainingVo
 import ru.points.fitapp.utils.Event
 
 sealed class TrainingEvent: Event {
@@ -8,6 +9,10 @@ sealed class TrainingEvent: Event {
         val id: Long? = null,
         val isShowed: Boolean
     ) : Event
+
+    data class OpenTraining(
+        val training: TrainingVo
+    ): Event
 
 }
 

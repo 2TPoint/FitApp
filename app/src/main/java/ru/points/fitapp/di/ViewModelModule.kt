@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 import ru.points.fitapp.ui.foodSearch.component.FoodSearchViewModel
 import ru.points.fitapp.ui.main.exercises.component.ExerciseListViewModel
+import ru.points.fitapp.ui.main.trainings.components.CurrentTrainingViewModel
 import ru.points.fitapp.ui.main.trainings.components.TrainingsViewModel
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 
@@ -62,6 +63,14 @@ val viewModelModule = module {
             addTrainingsUseCase = get(),
             getTrainingsUseCase = get(),
             getTrainingByIdUseCase = get()
+        )
+    }
+
+    viewModel<CurrentTrainingViewModel> {(currentId: Long)->
+        CurrentTrainingViewModel(
+            addNewExerciseToTrainingUseCase = get(),
+            getTrainingById = get(),
+            currentId = currentId
         )
     }
 }

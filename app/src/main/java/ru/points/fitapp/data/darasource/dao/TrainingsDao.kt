@@ -3,6 +3,7 @@ package ru.points.fitapp.data.darasource.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import ru.points.fitapp.data.entity.Training
 
@@ -16,4 +17,7 @@ interface TrainingsDao {
 
     @Insert
     fun insertTraining(training: Training)
+
+    @Update
+    fun updateTraining(training: Training)
 }

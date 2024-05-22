@@ -9,6 +9,9 @@ package ru.points.fitapp.navigation
  *
  * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
  */
+
+const val TRAINING_ARGUMENT_ID_KEY = "id"
+
 object Destinations {
     /**
      * Маршрут к странице списка упражнений.
@@ -21,4 +24,5 @@ object Destinations {
     const val SETTINGS_PAGE = "SETTINGS_PAGE"
     const val FOOD_SUMMARY_PAGE = "FOOD_SUMMARY_PAGE"
     const val FOOD_SEARCH_PAGE = "FOOD_SEARCH_PAGE"
+    const val CURRENT_TRAINING_PAGE = "CURRENT_TRAINING_PAGE"
 }

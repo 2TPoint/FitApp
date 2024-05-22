@@ -29,6 +29,7 @@ object ExerciseMapper {
             value = "${(value.value)} ${mapTypeToStr(value.isWeight)}" ,
             upNextTime = value.upNextTime ?: false,
             color = mapTypeToColor(value.isWeight),
+            time = value.time
         )
     }
 
@@ -60,5 +61,24 @@ object ExerciseMapper {
             true -> Color.Red
             false -> Color.Green
         }
+    }
+
+    fun colorToType(color: Color): Boolean{
+        return when(color) {
+            Color.Red -> true
+            else -> false
+        }
+    }
+
+    fun ExerciseVo.toExercise(): Exercise{
+        return Exercise(
+            id = this.id,
+            title = this.title,
+            description = this.description,
+            value = this.value.toDouble(),
+            upNextTime = this.upNextTime,
+            time = this.time,
+            isWeight = colorToType(this.color)
+        )
     }
 }

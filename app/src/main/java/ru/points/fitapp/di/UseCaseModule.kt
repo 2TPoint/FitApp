@@ -9,9 +9,11 @@ import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.InsertExerciseUseCase
 import ru.points.fitapp.domain.food.GetFoodInstantResponceByQueryUseCase
 import ru.points.fitapp.domain.food.GetNutritionsForCommonListUseCase
+import ru.points.fitapp.domain.trainings.implementations.AddNewExerciseToTrainingImplUseCase
 import ru.points.fitapp.domain.trainings.implementations.AddTrainingImpl
 import ru.points.fitapp.domain.trainings.implementations.GetTrainingByIdUseCaseImpl
 import ru.points.fitapp.domain.trainings.implementations.GetTrainingsUseCaseImpl
+import ru.points.fitapp.domain.trainings.interfaces.AddNewExerciseToTrainingUseCase
 import ru.points.fitapp.domain.trainings.interfaces.AddTraining
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingByIdUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingsUseCase
@@ -46,6 +48,10 @@ val useCaseModule = module {
 
     factory<GetTrainingsUseCase> {
         GetTrainingsUseCaseImpl(trainingsRepository = get())
+    }
+
+    factory<AddNewExerciseToTrainingUseCase> {
+        AddNewExerciseToTrainingImplUseCase(trainingsRepository = get())
     }
 
     factory<AddTraining> {
