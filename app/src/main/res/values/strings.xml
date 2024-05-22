@@ -44,4 +44,6 @@
     <string name="fates">Жиры: %1$s</string>
     <string name="proteines">Белки: %1$s</string>
     <string name="Search">Поиск</string>
+    <string name="eat">Еда</string>
+    <string name="settings">Настройки</string>
 </resources>

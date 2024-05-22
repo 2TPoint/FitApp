@@ -18,7 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
-import androidx.compose.material3.Card
+import androidx.compose.material.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -41,12 +41,8 @@ fun ExercisesScreen(
     modifier: Modifier
 ) {
     LazyColumn(
-
-        contentPadding = PaddingValues(
-            horizontal = 20.dp,
-            vertical = 50.dp
-        ),
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        modifier = modifier
     )
     {
         items(
@@ -102,12 +98,11 @@ private fun ExerciseListItem(
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
+        elevation = 5.dp,
         modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 15.dp)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
@@ -115,9 +110,7 @@ private fun ExerciseListItem(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(20.dp)
-                    .background(
-                        color = color
-                    )
+                    .background(color = color)
             )
             Column(
                 modifier = Modifier
@@ -197,7 +190,7 @@ private fun ExerciseListItem(
 fun RoundTimeParam(
     time: String
 ) {
-    Card(
+    androidx.compose.material3.Card(
         modifier = Modifier
             .width(70.dp)
             .height(15.dp),

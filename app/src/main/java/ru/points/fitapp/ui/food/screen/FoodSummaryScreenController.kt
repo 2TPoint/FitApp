@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -19,6 +20,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -45,11 +49,11 @@ fun FoodSummaryScreenController(
         navigateTo = navigateTo,
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF2C2C2C))
             .padding(16.dp)
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FoodSummaryScreen(
     state: FoodSummaryState,
@@ -60,32 +64,30 @@ private fun FoodSummaryScreen(
         modifier = modifier
     ) {
         Column {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        stringResource(R.string.todays_products_consumed),
-                        color = Color.White
+                        text = stringResource(R.string.todays_products_consumed),
+                        fontSize = 24.sp, fontWeight = FontWeight.Medium
                     )
                 },
-                backgroundColor = Color.Transparent,
-                elevation = 0.dp,
                 actions = {
                     IconButton(onClick = { navigateTo(FOOD_SEARCH_PAGE) }) {
                         Icon(
                             Icons.Filled.Add,
-                            contentDescription = "Settings",
-                            tint = Color.White
+                            contentDescription = null
                         )
                     }
-                }
+                },
+                modifier = Modifier.background(color = Color.Transparent)
             )
 
             Spacer(Modifier.height(16.dp))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                backgroundColor = Color(0xFF3C3C4E),
-                elevation = 4.dp
+                shape = RoundedCornerShape(20.dp),
+                elevation = 5.dp
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -97,7 +99,7 @@ private fun FoodSummaryScreen(
 
                     CircularProgressIndicator(
                         progress = 1f,
-                        color = Color(0xFF6D48E5),
+                        color = MaterialTheme.colorScheme.primary,
                         strokeWidth = 8.dp,
                         modifier = Modifier.size(200.dp)
                     )
@@ -108,7 +110,6 @@ private fun FoodSummaryScreen(
                         stringResource(R.string.calories_consumed, state.calories),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
                     )
 
                     Spacer(Modifier.height(16.dp))
@@ -139,7 +140,7 @@ private fun FoodSummaryScreen(
 @Composable
 private fun SummaryItem(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(value, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Medium)
-        Text(label, color = Color.Gray, fontSize = 14.sp)
+        Text(value, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+        Text(label, color = MaterialTheme.colorScheme.secondary, fontSize = 14.sp)
     }
 }

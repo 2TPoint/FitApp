@@ -1,6 +1,7 @@
 package ru.points.fitapp.ui.foodSearch.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,9 +20,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -30,8 +35,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ru.points.fitapp.R
@@ -40,6 +47,7 @@ import ru.points.fitapp.ui.foodSearch.component.FoodSearchEvents
 import ru.points.fitapp.ui.foodSearch.component.FoodSearchState
 import ru.points.fitapp.ui.foodSearch.component.FoodSearchViewModel
 import ru.points.fitapp.utils.Event
+import java.util.Locale
 
 @Composable
 fun FoodSearchScreenController(
@@ -75,8 +83,15 @@ private fun FoodSearchScreen(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
             ),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                cursorColor = MaterialTheme.colorScheme.primary
+            ),
             shape = RoundedCornerShape(20.dp),
-            modifier = Modifier.fillMaxWidth().padding(top = 10.dp, start = 12.dp, end = 12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, start = 12.dp, end = 12.dp),
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
@@ -105,23 +120,21 @@ fun FoodCard(
     onEvent: (Event) -> Unit
 ) {
     Card(
-        backgroundColor = Color(0xFF2E3B55),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = foodItem.name,
-                color = Color.White,
+                text = foodItem.name.capitalize()
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
                 text = "${foodItem.weight} | ${foodItem.calories}",
-                color = Color.White
+                color = MaterialTheme.colorScheme.secondary
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -132,17 +145,17 @@ fun FoodCard(
             ) {
                 Text(
                     text = stringResource(R.string.carbonates, foodItem.carbohydrates),
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.secondary
                 )
 
                 Text(
                     text = stringResource(R.string.fates, foodItem.proteins),
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.secondary
                 )
 
                 Text(
                     text = stringResource(R.string.proteines, foodItem.fats),
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
@@ -152,7 +165,7 @@ fun FoodCard(
                 onClick = { onEvent(FoodSearchEvents.Save(foodItem)) },
                 modifier = Modifier.align(Alignment.End)
             ) {
-                Icon(Icons.Default.Add, contentDescription = null, tint = Color.White)
+                Icon(Icons.Default.Add, contentDescription = null)
             }
         }
     }

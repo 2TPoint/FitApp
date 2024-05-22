@@ -1,9 +1,7 @@
 package ru.points.fitapp.ui.main.trainings.components.item
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +10,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ fun TrainingProgramItem(
     navController: NavController
 ) {
     Card(
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(20.dp),
         elevation = 5.dp,
         modifier = Modifier
             .fillMaxWidth()
@@ -41,6 +42,7 @@ fun TrainingProgramItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable { navController.navigate("${Destinations.CURRENT_TRAINING_PAGE}/${training.id.toLong()}") }
                 .padding(16.dp)
         ) {
             Column {
@@ -62,15 +64,13 @@ fun TrainingProgramItem(
                     color = Color.Gray
                 )
             }
-            Box(
+
+            Icon(
                 modifier = Modifier
-                    .size(70.dp, 30.dp)
-                    .background(Color.Yellow, shape = RoundedCornerShape(50))
-                    .clickable { navController.navigate("${Destinations.CURRENT_TRAINING_PAGE}/${training.id.toLong()}") },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Перейти", color = Color.Black, fontWeight = FontWeight.Bold)
-            }
+                    .size(width = 29.dp, height = 29.dp),
+                imageVector = Icons.Default.ArrowForwardIos,
+                contentDescription = null
+            )
         }
     }
 }
