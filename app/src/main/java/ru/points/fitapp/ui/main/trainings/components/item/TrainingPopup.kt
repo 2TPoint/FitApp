@@ -12,6 +12,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -31,14 +32,20 @@ import ru.points.fitapp.utils.Event
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTrainingScreen(onEvent: (Event) -> Unit) {
-    ModalBottomSheet(onDismissRequest = { onEvent(TrainingEvent.UpdatePopupShowedState(isShowed = false)) }) {
+fun AddTrainingScreen(
+    sheetState: SheetState,
+    onEvent: (Event) -> Unit
+) {
+    ModalBottomSheet(
+        sheetState = sheetState,
+        onDismissRequest = { onEvent(TrainingEvent.UpdatePopupShowedState(isShowed = false)) }
+    ) {
         PopupData(onEvent = onEvent)
     }
 }
 
 @Composable
-private fun PopupData(onEvent: (Event) -> Unit){
+private fun PopupData(onEvent: (Event) -> Unit) {
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
@@ -98,7 +105,7 @@ private fun PopupData(onEvent: (Event) -> Unit){
 
         Button(
             onClick = {
-                      onEvent(TrainingEvent.UpdatePopupShowedState(isShowed = false))
+                onEvent(TrainingEvent.UpdatePopupShowedState(isShowed = false))
             },
             modifier = Modifier
                 .fillMaxWidth()

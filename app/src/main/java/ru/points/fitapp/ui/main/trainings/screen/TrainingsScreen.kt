@@ -20,7 +20,6 @@ fun TrainingProgramsScreen(
     navController: NavController
 ) {
     LazyColumn(
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 50.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
         modifier = modifier
     ) {

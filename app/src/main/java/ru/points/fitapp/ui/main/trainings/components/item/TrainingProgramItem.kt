@@ -34,9 +34,7 @@ fun TrainingProgramItem(
         elevation = 5.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-
-            }
+            .clickable {}
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -46,12 +44,23 @@ fun TrainingProgramItem(
                 .padding(16.dp)
         ) {
             Column {
-                Text(text = training.name, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(
+                    text = training.name,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+
                 Text(
                     text = training.description,
                     fontSize = 12.sp
                 )
-                Text(text = training.time, fontWeight = FontWeight.Bold, fontSize = 12.sp, color = Color.Gray)
+
+                Text(
+                    text = training.time,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
             }
             Box(
                 modifier = Modifier

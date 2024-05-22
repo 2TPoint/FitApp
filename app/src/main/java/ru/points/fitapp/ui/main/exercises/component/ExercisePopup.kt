@@ -93,9 +93,7 @@ private fun PopupScreen(
 ) {
     val scrollState = rememberScrollState()
     val isMuscleExercise = remember {
-        mutableStateOf(
-            state.isWeight
-        )
+        mutableStateOf(state.isWeight)
     }
 
     Column(
@@ -108,12 +106,12 @@ private fun PopupScreen(
     ) {
 
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(24.dp),
             text = "Создайте упражнение",
             fontSize = 20.sp,
             textAlign = TextAlign.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(24.dp)
         )
         OutlinedTextField(
             value = state.name,
@@ -159,7 +157,7 @@ private fun PopupScreen(
                         shape = RoundedCornerShape(corner = CornerSize(20.dp))
                     )
                     .background(Color.Red)
-                    .clickable(enabled = !isMuscleExercise.value){}
+                    .clickable(enabled = !isMuscleExercise.value) {}
 
             ) {
                 Icon(
@@ -190,7 +188,7 @@ private fun PopupScreen(
                         shape = RoundedCornerShape(corner = CornerSize(20.dp))
                     )
                     .background(Color.Green)
-                    .clickable(enabled = isMuscleExercise.value){}
+                    .clickable(enabled = isMuscleExercise.value) {}
 
 
             ) {
@@ -219,17 +217,13 @@ private fun PopupScreen(
                     }
                 )
             },
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
 
         Button(
-            onClick = {
-                onEvent(PopupEvents.SaveExercise)
-            },
-            modifier = Modifier
-                .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+            onClick = { onEvent(PopupEvents.SaveExercise) },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = "Сохранить",

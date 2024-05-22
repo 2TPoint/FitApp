@@ -23,7 +23,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -72,10 +71,10 @@ private fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val modalBottomSheetState = rememberModalBottomSheetState()
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    var selectedTabIndex by remember { mutableIntStateOf(TRAINING_LIST_INDEX) }
+
     val pagerState = rememberPagerState(
-        initialPage = 0,
+        initialPage = TRAINING_LIST_INDEX,
         pageCount = { tabs.size }
     )
 
@@ -88,9 +87,6 @@ private fun MainScreen(
             selectedTabIndex = pagerState.currentPage
         }
     }
-
-    var showViewPopup by remember { mutableStateOf(false) }
-    var showAddTraining by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
         Column(
@@ -110,52 +106,49 @@ private fun MainScreen(
                     )
                 }
             }
-        }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ) { index: Int ->
-            when (index) {
-                0 -> TrainingProgramsScreen(
-                    list = trainingsListState.list,
-                    onEvent = onTrainingEvent,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 20.dp),
-                    navController = navController
-                )
-                1 -> ExercisesScreen(
-                    list = exerciseListState.list,
-                    onEvent = onExerciseEvent,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 20.dp)
-                )
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 20.dp)
+            ) { index: Int ->
+                when (index) {
+                    TRAINING_LIST_INDEX -> TrainingProgramsScreen(
+                        list = trainingsListState.list,
+                        onEvent = onTrainingEvent,
+                        navController = navController,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 12.dp),
+                    )
+
+                    EXERCISES_LIST_INDEX -> ExercisesScreen(
+                        list = exerciseListState.list,
+                        onEvent = onExerciseEvent,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 12.dp)
+                    )
+                }
             }
-        }
-
-        if (trainingsListState.isPopupShowed) {
-            AddTrainingScreen(
-                onEvent = onTrainingEvent
-            )
-        }
-
-        if (exerciseListState.isPopupShowed) {
-            PopupScreenController(
-                sheetState = modalBottomSheetState,
-                onEvent = onExerciseEvent,
-                popupState = exerciseListState.popupState,
-                modifier = Modifier.fillMaxWidth()
-            )
         }
 
         FloatingActionButton(
             onClick = {
-                if (selectedTabIndex == 0) {
-                    onTrainingEvent(TrainingEvent.UpdatePopupShowedState(isShowed = true))
-                } else {
-                    onExerciseEvent(ExerciseListEvent.UpdatePopupShowedState(null, isShowed = true))
+                when (selectedTabIndex) {
+                    TRAINING_LIST_INDEX -> onTrainingEvent(
+                        TrainingEvent.UpdatePopupShowedState(
+                            isShowed = true
+                        )
+                    )
+
+                    EXERCISES_LIST_INDEX -> onExerciseEvent(
+                        ExerciseListEvent.UpdatePopupShowedState(
+                            null,
+                            isShowed = true
+                        )
+                    )
                 }
             },
             modifier = Modifier
@@ -168,4 +161,25 @@ private fun MainScreen(
             )
         }
     }
+
+    val trainingSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    if (trainingsListState.isPopupShowed) {
+        AddTrainingScreen(
+            sheetState = trainingSheetState,
+            onEvent = onTrainingEvent
+        )
+    }
+
+    val exerciseModalSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    if (exerciseListState.isPopupShowed) {
+        PopupScreenController(
+            sheetState = exerciseModalSheetState,
+            onEvent = onExerciseEvent,
+            popupState = exerciseListState.popupState,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
+
+const val TRAINING_LIST_INDEX = 0
+const val EXERCISES_LIST_INDEX = 1
