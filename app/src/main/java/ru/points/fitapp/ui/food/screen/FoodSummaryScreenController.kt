@@ -37,6 +37,7 @@ import ru.points.fitapp.R
 import ru.points.fitapp.navigation.Destinations.FOOD_SEARCH_PAGE
 import ru.points.fitapp.ui.food.component.FoodSummaryState
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
+import java.util.Locale
 
 @Composable
 fun FoodSummaryScreenController(
@@ -107,7 +108,10 @@ private fun FoodSummaryScreen(
                     Spacer(Modifier.height(16.dp))
 
                     Text(
-                        stringResource(R.string.calories_consumed, state.calories),
+                        stringResource(
+                            R.string.calories_consumed,
+                            String.format(Locale.ENGLISH, "%.3f", state.calories)
+                        ),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                     )
@@ -120,15 +124,15 @@ private fun FoodSummaryScreen(
                     ) {
                         SummaryItem(
                             label = stringResource(R.string.carbohydrates),
-                            value = "${state.carbohydrates}г"
+                            value = String.format(Locale.ENGLISH, "%.3f", state.carbohydrates) + "г"
                         )
                         SummaryItem(
                             label = stringResource(R.string.fats),
-                            value = "${state.proteins}г"
+                            value = String.format(Locale.ENGLISH, "%.3f", state.fats) + "г"
                         )
                         SummaryItem(
                             label = stringResource(R.string.proteins),
-                            value = "${state.fats}г"
+                            value = String.format(Locale.ENGLISH, "%.3f", state.proteins) + "г"
                         )
                     }
                 }
