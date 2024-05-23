@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.points.fitapp.data.manager.PreferencesManager
+import ru.points.fitapp.domain.exercises.use_case_interface.DeleteExerciseUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExerciseUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.InsertExerciseUseCase
@@ -34,6 +35,7 @@ class ExerciseListViewModel(
     private val getExerciseUseCase: GetExerciseUseCase,
     private val insertExerciseUseCase: InsertExerciseUseCase,
     private val updateExerciseUseCase: UpdateExerciseUseCase,
+    private val deleteExerciseUseCase: DeleteExerciseUseCase,
     preferencesManager: PreferencesManager,
 ) : ViewModel(), EventListener {
 
@@ -94,6 +96,13 @@ class ExerciseListViewModel(
                 updatePopupType(isWeight = event.isWeight)
             }
             is PopupEvents.UpdateExercise -> updateExercise(event)
+            is ExerciseEvent.DeleteExercise -> deleteExercise(event)
+        }
+    }
+
+    private fun deleteExercise(event: ExerciseEvent.DeleteExercise) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteExerciseUseCase.handle(event.id)
         }
     }
 
