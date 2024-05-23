@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.points.fitapp.domain.exercises.use_case_interface.DeleteExerciseUseCase
+import ru.points.fitapp.data.manager.PreferencesManager
+import ru.points.fitapp.data.vo.ExerciseVo
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExerciseUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.InsertExerciseUseCase
@@ -32,8 +33,10 @@ class ExerciseListViewModel(
     private val getExercisesUseCase: GetExercisesUseCase,
     private val getExerciseUseCase: GetExerciseUseCase,
     private val insertExerciseUseCase: InsertExerciseUseCase,
-    private val deleteExerciseUseCase: DeleteExerciseUseCase
+    preferencesManager: PreferencesManager,
 ) : ViewModel(), EventListener {
+
+    val isKg = preferencesManager.isKg
 
     private val _exercises = getExercisesUseCase.handle()
 
@@ -86,20 +89,9 @@ class ExerciseListViewModel(
             is PopupEvents.SaveExercise -> {
                 upsertExercise()
             }
-
             is PopupEvents.UpdateType -> {
                 updatePopupType(isWeight = event.isWeight)
             }
-
-            is ExerciseEvent.DeleteExercise -> {
-                deleteExerciseById(event)
-            }
-        }
-    }
-
-    private fun deleteExerciseById(event: ExerciseEvent.DeleteExercise) {
-        viewModelScope.launch(Dispatchers.IO) {
-            deleteExerciseUseCase.handle(event.id)
         }
     }
 

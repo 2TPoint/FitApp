@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
+import ru.points.fitapp.ui.calculator.CalculatorScreen
 import ru.points.fitapp.ui.food.component.FoodSummaryViewModel
 import ru.points.fitapp.ui.food.screen.FoodSummaryScreenController
 import ru.points.fitapp.ui.foodSearch.component.FoodSearchViewModel
@@ -83,6 +84,12 @@ fun FitAppNavHost(
         }
 
         composable(
+            route = Destinations.CALCULATION_PAGE,
+        ) {
+            CalculatorScreen()
+        }
+
+        composable(
             route = "${Destinations.CURRENT_TRAINING_PAGE}/{${TRAINING_ARGUMENT_ID_KEY}}",
             arguments = listOf(
                 navArgument(name = TRAINING_ARGUMENT_ID_KEY) {
@@ -92,8 +99,9 @@ fun FitAppNavHost(
         ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong(TRAINING_ARGUMENT_ID_KEY)
             id?.let {
-                val viewModel: CurrentTrainingViewModel = getViewModel(parameters = { parametersOf(it) })
-                CurrentTrainingScreen(viewModel = viewModel, viewModel::handle)
+                val viewModel: CurrentTrainingViewModel =
+                    getViewModel(parameters = { parametersOf(it) })
+                CurrentTrainingScreen(viewModel = viewModel)
             }
         }
     }

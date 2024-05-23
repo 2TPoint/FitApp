@@ -7,6 +7,7 @@ import ru.points.fitapp.data.darasource.dao.FoodDao
 import ru.points.fitapp.data.darasource.dao.TrainingsDao
 import ru.points.fitapp.data.datasource.dao.ExerciseDao
 import ru.points.fitapp.data.datasource.database.FitAppDatabase
+import ru.points.fitapp.data.manager.PreferencesManager
 
 /**
  * @file DatabaseModule.kt
@@ -46,5 +47,9 @@ val databaseModule = module {
 
     factory<TrainingsDao> {
         get<FitAppDatabase>().getTrainingsDao()
+    }
+
+    single {
+        PreferencesManager(androidContext())
     }
 }

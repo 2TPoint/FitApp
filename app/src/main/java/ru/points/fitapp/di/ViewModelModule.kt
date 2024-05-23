@@ -31,7 +31,7 @@ val viewModelModule = module {
             getExercisesUseCase = get(),
             getExerciseUseCase = get(),
             insertExerciseUseCase = get(),
-            deleteExerciseUseCase = get()
+            get()
         )
     }
 
@@ -43,7 +43,7 @@ val viewModelModule = module {
      * @return Экземпляр SettingsViewModel.
      */
     viewModel<SettingsViewModel> {
-        SettingsViewModel()
+        SettingsViewModel(preferencesManager = get())
     }
 
     viewModel<FoodSummaryViewModel> {
@@ -67,14 +67,14 @@ val viewModelModule = module {
         )
     }
 
-    viewModel<CurrentTrainingViewModel> {(currentId: Long)->
+    viewModel<CurrentTrainingViewModel> { (currentId: Long) ->
         CurrentTrainingViewModel(
             addNewExerciseToTrainingUseCase = get(),
             getTrainingById = get(),
             currentId = currentId,
-            getExercisesUseCase = get(),
-            reorderTrainingExercisesUseCase = get(),
-            deleteSelectedExerciseUseCase = get()
+            getExercisesUseCase = get()
         )
     }
+
+
 }

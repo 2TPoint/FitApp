@@ -1,7 +1,9 @@
 package ru.points.fitapp.domain.exercises.use_case_impl
 
+import androidx.room.PrimaryKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ru.points.fitapp.data.manager.PreferencesManager
 import ru.points.fitapp.data.repository.irepository.ExerciseRepository
 import ru.points.fitapp.data.vo.ExerciseVo
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
@@ -17,7 +19,7 @@ import ru.points.fitapp.utils.ExerciseMapper
  * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
  */
 class GetExercisesUseCaseImpl(
-    private val exerciseRepository: ExerciseRepository
+    private val exerciseRepository: ExerciseRepository,
 ) : GetExercisesUseCase {
     /**
      * Получает список упражнений из репозитория и преобразует его в VO.

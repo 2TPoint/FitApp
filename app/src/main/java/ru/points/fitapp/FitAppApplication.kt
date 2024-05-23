@@ -1,9 +1,13 @@
 package ru.points.fitapp
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.compose.koinInject
 import org.koin.core.context.startKoin
+import ru.points.fitapp.data.manager.PreferencesManager
 import ru.points.fitapp.di.databaseModule
 import ru.points.fitapp.di.repositoryModule
 import ru.points.fitapp.di.useCaseModule
@@ -19,11 +23,6 @@ import ru.points.fitapp.di.viewModelModule
  */
 class FitAppApplication : Application() {
 
-    /**
-     * @brief Инициализирует Koin.
-     *
-     * Вызывается при создании приложения. Инициализирует Koin с настройками логирования и контекстом приложения, а также загружает модули зависимостей.
-     */
     override fun onCreate() {
         super.onCreate()
 

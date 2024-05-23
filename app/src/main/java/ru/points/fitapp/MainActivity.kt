@@ -1,5 +1,7 @@
 package ru.points.fitapp
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,9 +13,11 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.EggAlt
 import androidx.compose.material.icons.filled.ElectricBolt
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Calculate
 import androidx.compose.material.icons.outlined.EggAlt
 import androidx.compose.material.icons.outlined.ElectricBolt
 import androidx.compose.material.icons.outlined.Settings
@@ -32,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.koin.android.ext.android.inject
+import org.koin.java.KoinJavaComponent.inject
+import ru.points.fitapp.data.manager.PreferencesManager
 import ru.points.fitapp.navigation.Destinations
 import ru.points.fitapp.navigation.FitAppNavHost
 import ru.points.fitapp.ui.theme.FitAppTheme
@@ -45,11 +52,12 @@ import ru.points.fitapp.ui.theme.FitAppTheme
  * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
  */
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FitAppTheme {
-
+            FitAppTheme(darkTheme = preferences.isDark) {
                 val navHostController = rememberNavController()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -70,6 +78,16 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        val preferences by inject<PreferencesManager>(PreferencesManager::class.java)
+    }
+}
+
+fun Context.activity(): ComponentActivity? = when (this) {
+    is ComponentActivity -> this
+    is ContextWrapper -> baseContext.activity()
+    else -> null
 }
 
 /**
@@ -168,6 +186,12 @@ private fun baseRoutes() = listOf(
         route = Destinations.FOOD_SUMMARY_PAGE,
         filledIcon = Icons.Filled.EggAlt,
         outlinedIcon = Icons.Outlined.EggAlt
+    ),
+    Screen(
+        title = stringResource(R.string.calculator),
+        route = Destinations.CALCULATION_PAGE,
+        filledIcon = Icons.Filled.Calculate,
+        outlinedIcon = Icons.Outlined.Calculate
     ),
     Screen(
         title = stringResource(R.string.settings),

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
 import ru.points.fitapp.R
+import ru.points.fitapp.ui.settings.component.SettingsEvents
 import ru.points.fitapp.ui.settings.component.SettingsState
 import ru.points.fitapp.ui.settings.component.SettingsViewModel
 import ru.points.fitapp.utils.Event
@@ -58,6 +60,7 @@ fun SettingsScreenController(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
+            .padding(top = 40.dp)
     )
 }
 
@@ -67,36 +70,51 @@ private fun SettingsScreen(
     onEvent: (Event) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val scrollState = rememberScrollState()
     Column(
-        modifier = modifier.verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(14.dp),
+        modifier = modifier,
     ) {
-        VariantOption(
-            text = stringResource(id = R.string.weight_unit_of_measure),
-            variant = Variant(value = stringResource(id = R.string.kg)),
-            onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth()
-        )
 
-        VariantOption(
-            text = stringResource(id = R.string.time_unit_of_measure),
-            variant = Variant(value = stringResource(id = R.string.min)),
-            onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        VariantOption(
-            text = stringResource(id = R.string.distance_unit_of_measure),
-            variant = Variant(value = stringResource(id = R.string.meter)),
-            onClick = { /*TODO*/ },
+        ToggleOption(
+            name = stringResource(R.string.use_funts),
+            value = !state.isKg,
+            onToggle = { value ->
+                onEvent(
+                    SettingsEvents.UpdateBooleanEvent(
+                        value,
+                        SettingsEvents.UpdateBooleanEvent.ToggleType.WEIGHT
+                    )
+                )
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
         ToggleOption(
+            name = stringResource(R.string.use_miles),
+            value = !state.isM,
+            onToggle = { value ->
+                onEvent(
+                    SettingsEvents.UpdateBooleanEvent(
+                        value,
+                        SettingsEvents.UpdateBooleanEvent.ToggleType.DISTANCE
+                    )
+                )
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+
+        ToggleOption(
             name = stringResource(id = R.string.use_dark_theme),
-            value = false,
-            onToggle = { /*TODO*/ },
+            value = state.isDarkThemeSelected,
+            onToggle = { value ->
+                onEvent(
+                    SettingsEvents.UpdateBooleanEvent(
+                        value,
+                        SettingsEvents.UpdateBooleanEvent.ToggleType.THEME
+                    )
+                )
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -109,35 +127,8 @@ private fun SettingsScreen(
         SimpleOption(
             name = stringResource(id = R.string.delete_all_data),
             onClick = { /*TODO*/ },
+            color = Color.Red,
             modifier = Modifier.fillMaxWidth()
-        )
-    }
-}
-
-
-@Composable
-fun VariantOption(
-    text: String,
-    variant: Variant,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier.height(40.dp)
-    ) {
-        Text(
-            text = text,
-            fontSize = 16.sp,
-            textAlign = TextAlign.Start
-        )
-
-        Text(
-            text = variant.value,
-            fontSize = 16.sp,
-            textAlign = TextAlign.End,
-            modifier = Modifier.clickable { onClick() }
         )
     }
 }
@@ -146,10 +137,12 @@ fun VariantOption(
 fun SimpleOption(
     name: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    color: Color = Color.Black
 ) {
     Text(
         text = name,
+        color = color,
         modifier = modifier
             .height(40.dp)
             .clickable { onClick() }
@@ -169,13 +162,13 @@ private fun ToggleOption(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.height(40.dp)
     ) {
-        Text(
-            text = name
-        )
+        Text(text = name)
 
         Switch(
             checked = value,
-            onCheckedChange = { newValue -> onToggle(newValue) }
+            onCheckedChange = { newValue ->
+                onToggle(newValue)
+            }
         )
     }
 }
