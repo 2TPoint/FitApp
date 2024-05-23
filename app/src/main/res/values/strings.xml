@@ -48,4 +48,8 @@
     <string name="settings">Настройки</string>
     <string name="use_miles">Использовать мили</string>
     <string name="use_funts">Использовать фунты</string>
+    <string name="calculator">Калькулятор</string>
+    <string name="max_weight_jim">Максимальный вес при жиме лежа на раз: %1$s</string>
+    <string name="max_weight_pris">Максимальный вес при присяде на раз: %1$s</string>
+    <string name="max_weight_podtg">Максимальный вес при подтягиваниях на раз: %1$s</string>
 </resources>

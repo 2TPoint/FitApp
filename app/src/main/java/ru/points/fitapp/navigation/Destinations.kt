@@ -25,4 +25,5 @@ object Destinations {
     const val FOOD_SUMMARY_PAGE = "FOOD_SUMMARY_PAGE"
     const val FOOD_SEARCH_PAGE = "FOOD_SEARCH_PAGE"
     const val CURRENT_TRAINING_PAGE = "CURRENT_TRAINING_PAGE"
+    const val CALCULATION_PAGE = "CALCULATION_PAGE"
 }
