@@ -1,12 +1,9 @@
 package ru.points.fitapp.data.repository.implementation
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import ru.points.fitapp.data.datasource.database.FitAppDatabase
 import ru.points.fitapp.data.entity.Exercise
 import ru.points.fitapp.data.repository.irepository.ExerciseRepository
-import java.sql.Time
 
 
 /**
@@ -37,21 +34,9 @@ class ExerciseRepositoryImpl(
     }
 
     override suspend fun updateExercise(
-        id: Long,
-        title: String,
-        description: String?,
-        value: Double?,
-        upNextTime: Boolean,
-        isWeight: Boolean,
-        time: Time?) {
+        exercise: Exercise) {
         database.getExerciseDao().updateExercise(
-            id = id,
-            title = title,
-            description = description,
-            value = value,
-            upNextTime = upNextTime,
-            isWeight = isWeight,
-            time = time
+            exercise = exercise
         )
     }
 }

@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.points.fitapp.data.manager.PreferencesManager
-import ru.points.fitapp.data.vo.ExerciseVo
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExerciseUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.exercises.use_case_interface.InsertExerciseUseCase
+import ru.points.fitapp.domain.exercises.use_case_interface.UpdateExerciseUseCase
 import ru.points.fitapp.utils.Event
 import ru.points.fitapp.utils.EventListener
 
@@ -33,6 +33,7 @@ class ExerciseListViewModel(
     private val getExercisesUseCase: GetExercisesUseCase,
     private val getExerciseUseCase: GetExerciseUseCase,
     private val insertExerciseUseCase: InsertExerciseUseCase,
+    private val updateExerciseUseCase: UpdateExerciseUseCase,
     preferencesManager: PreferencesManager,
 ) : ViewModel(), EventListener {
 
@@ -92,7 +93,16 @@ class ExerciseListViewModel(
             is PopupEvents.UpdateType -> {
                 updatePopupType(isWeight = event.isWeight)
             }
+            is PopupEvents.UpdateExercise -> updateExercise(event)
         }
+    }
+
+    private fun updateExercise(event: PopupEvents.UpdateExercise) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val exercise = event.exercise
+            updateExerciseUseCase.handle(exercise)
+        }
+        _showPopup.update { false }
     }
 
     private fun updatePopupType(

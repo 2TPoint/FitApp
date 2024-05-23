@@ -5,7 +5,6 @@ import org.koin.java.KoinJavaComponent.inject
 import ru.points.fitapp.data.entity.Exercise
 import ru.points.fitapp.data.manager.PreferencesManager
 import ru.points.fitapp.data.vo.ExerciseVo
-import java.util.prefs.PreferenceChangeEvent
 
 /**
  * @file ExerciseMapper.kt
@@ -54,11 +53,12 @@ object ExerciseMapper {
     }
 
     fun ExerciseVo.toExercise(): Exercise{
+        val value = if (this.value.contains(' ')) this.value.substring(0, this.value.indexOf(" ")) else this.value
         return Exercise(
             id = this.id,
             title = this.title,
             description = this.description,
-            value = this.value.substring(0, this.value.indexOf(" ")).toDouble(),
+            value = value.toDouble(),
             upNextTime = this.upNextTime,
             time = this.time,
             isWeight = colorToType(this.color)

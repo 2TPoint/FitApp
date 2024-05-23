@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.points.fitapp.data.vo.TrainingVo
 import ru.points.fitapp.navigation.Destinations
-import ru.points.fitapp.utils.Event
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -33,7 +32,6 @@ import ru.points.fitapp.utils.Event
 fun TrainingProgramItem(
     training: TrainingVo,
     navController: NavController,
-    onEvent: (Event) -> Unit,
     modifier: Modifier
 ) {
     Card(

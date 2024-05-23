@@ -1,5 +1,6 @@
 package ru.points.fitapp.ui.main.exercises.component
 
+import ru.points.fitapp.data.vo.ExerciseVo
 import ru.points.fitapp.utils.Event
 
 /**
@@ -83,6 +84,8 @@ sealed class PopupEvents: Event {
      * Событие сохранения упражнения.
      */
     data object SaveExercise: PopupEvents()
+
+    data class UpdateExercise(val exercise: ExerciseVo): PopupEvents()
 
 }
 

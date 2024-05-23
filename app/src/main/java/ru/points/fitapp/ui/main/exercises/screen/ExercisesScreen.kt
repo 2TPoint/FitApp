@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -167,14 +166,6 @@ fun ExerciseListItem(
                     }
                 }
             }
-            if (showArrow)
-                Icon(
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(width = 29.dp, height = 29.dp),
-                    imageVector = Icons.Default.ArrowForwardIos,
-                    contentDescription = ""
-                )
             if (showBinIcon)
 
                 IconButton(onClick = {

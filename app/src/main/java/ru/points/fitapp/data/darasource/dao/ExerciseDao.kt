@@ -3,9 +3,9 @@ package ru.points.fitapp.data.datasource.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import ru.points.fitapp.data.entity.Exercise
-import java.sql.Time
 
 /**
  * @file ExerciseDao.kt
@@ -22,8 +22,8 @@ interface ExerciseDao {
     @Insert
     suspend fun insertExercise(exercise: Exercise)
 
-    @Query("UPDATE exercise SET title = :title, description = :description, value = :value, upNextTime = :upNextTime, isWeight = :isWeight, time = :time WHERE id = :id")
-    suspend fun updateExercise(id: Long, title: String, description: String?, value: Double?, upNextTime: Boolean, isWeight: Boolean, time: Time?)
+    @Update
+    suspend fun updateExercise(exercise: Exercise)
 
     @Query("SELECT * FROM exercise WHERE id = :id")
     fun getExercise(id: Long): Flow<Exercise>

@@ -33,7 +33,6 @@ fun TrainingProgramsScreen(
             TrainingProgramItem(
                 training = item,
                 navController = navController,
-                onEvent = onEvent,
                 modifier = Modifier
                     .clickable {
                         onEvent(

@@ -2,7 +2,6 @@ package ru.points.fitapp.data.repository.irepository
 
 import kotlinx.coroutines.flow.Flow
 import ru.points.fitapp.data.entity.Exercise
-import java.sql.Time
 
 /**
  * @file ExerciseRepository.kt
@@ -38,13 +37,7 @@ interface ExerciseRepository {
      * @param type Тип упражнения.
      */
     suspend fun updateExercise(
-        id: Long,
-        title: String,
-        description: String?,
-        value: Double?,
-        upNextTime: Boolean,
-        isWeight: Boolean,
-        time: Time?)
+        exercise: Exercise)
 
     /**
      * Получает упражнение по его идентификатору.

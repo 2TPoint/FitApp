@@ -31,7 +31,8 @@ val viewModelModule = module {
             getExercisesUseCase = get(),
             getExerciseUseCase = get(),
             insertExerciseUseCase = get(),
-            get()
+            updateExerciseUseCase = get(),
+            preferencesManager = get()
         )
     }
 

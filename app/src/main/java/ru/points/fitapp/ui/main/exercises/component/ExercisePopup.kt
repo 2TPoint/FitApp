@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.points.fitapp.R
+import ru.points.fitapp.data.vo.ExerciseVo
 import ru.points.fitapp.utils.Event
 
 /**
@@ -106,7 +107,7 @@ private fun PopupScreen(
     ) {
 
         Text(
-            text = "Создайте упражнение",
+            text = if (state.selectedId == null) "Создайте упражнение" else "Редактируйте упражнение",
             fontSize = 20.sp,
             textAlign = TextAlign.Start,
             modifier = Modifier
@@ -221,7 +222,20 @@ private fun PopupScreen(
         )
 
         Button(
-            onClick = { onEvent(PopupEvents.SaveExercise) },
+            onClick = {
+                if (state.selectedId == null)
+                    onEvent(PopupEvents.SaveExercise)
+                else
+                    onEvent(PopupEvents.UpdateExercise(ExerciseVo(
+                        id = state.selectedId,
+                        title = state.name,
+                        description = state.description ?: "",
+                        value = state.value,
+                        upNextTime = state.upNextTime,
+                        time = state.time,
+                        color = if (state.isWeight) Color.Red else Color.Green
+                    )))
+                      },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
             modifier = Modifier.fillMaxWidth()
         ) {
