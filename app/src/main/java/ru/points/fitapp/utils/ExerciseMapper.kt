@@ -58,7 +58,7 @@ object ExerciseMapper {
             id = this.id,
             title = this.title,
             description = this.description,
-            value = this.value.toDouble(),
+            value = this.value.substring(0, this.value.indexOf(" ")).toDouble(),
             upNextTime = this.upNextTime,
             time = this.time,
             isWeight = colorToType(this.color)

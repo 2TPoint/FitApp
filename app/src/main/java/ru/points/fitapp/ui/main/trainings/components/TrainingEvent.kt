@@ -21,3 +21,7 @@ sealed class TrainingPopUpEvents: Event {
     data class SaveChanges(val name: String, val description: String) : TrainingPopUpEvents()
 
 }
+
+sealed class TrainingExerciseEvent: Event {
+    data class DeleteTraining(val id: Long)
+}

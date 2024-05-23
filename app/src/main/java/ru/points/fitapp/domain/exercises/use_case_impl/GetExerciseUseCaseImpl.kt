@@ -26,7 +26,7 @@ class GetExerciseUseCaseImpl(
      * @param id Уникальный идентификатор упражнения.
      * @return Flow с упражнением.
      */
-    override fun handle(id: Long): Flow<Exercise> {
+    override suspend fun handle(id: Long): Flow<Exercise> {
         return exerciseRepository.getExercise(id = id)
     }
 }

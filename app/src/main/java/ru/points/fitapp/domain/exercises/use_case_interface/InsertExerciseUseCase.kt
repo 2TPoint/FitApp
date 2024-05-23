@@ -23,7 +23,7 @@ interface InsertExerciseUseCase {
      * @param upNextTime Флаг, указывающий, должно ли упражнение быть добавлено в список "Следующее".
      * @param type Тип упражнения.
      */
-    fun handle(
+    suspend fun handle(
         title: String,
         description: String?,
         value: Double?,

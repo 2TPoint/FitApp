@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,26 +25,28 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.points.fitapp.data.vo.TrainingVo
 import ru.points.fitapp.navigation.Destinations
+import ru.points.fitapp.utils.Event
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrainingProgramItem(
     training: TrainingVo,
-    navController: NavController
+    navController: NavController,
+    onEvent: (Event) -> Unit,
+    modifier: Modifier
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
         elevation = 5.dp,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {}
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { navController.navigate("${Destinations.CURRENT_TRAINING_PAGE}/${training.id.toLong()}") }
+                .clickable { }
                 .padding(16.dp)
         ) {
             Column {
@@ -65,12 +69,15 @@ fun TrainingProgramItem(
                 )
             }
 
-            Icon(
-                modifier = Modifier
-                    .size(width = 29.dp, height = 29.dp),
-                imageVector = Icons.Default.ArrowForwardIos,
-                contentDescription = null
-            )
+            IconButton(onClick = { navController.navigate("${Destinations.CURRENT_TRAINING_PAGE}/${training.id.toLong()}") }) {
+
+                Icon(
+                    modifier = Modifier
+                        .size(width = 29.dp, height = 29.dp),
+                    imageVector = Icons.Default.ArrowForwardIos,
+                    contentDescription = null
+                )
+            }
         }
     }
 }

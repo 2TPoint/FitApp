@@ -85,3 +85,7 @@ sealed class PopupEvents: Event {
     data object SaveExercise: PopupEvents()
 
 }
+
+sealed class ExerciseEvent: Event {
+    data class DeleteExercise(val id: Long): Event
+}

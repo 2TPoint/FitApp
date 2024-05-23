@@ -16,56 +16,18 @@ import java.sql.Time
  */
 @Dao
 interface ExerciseDao {
-
-    /**
-     * Получает список всех упражнений из базы данных.
-     *
-     * @return Flow с списком упражнений.
-     */
     @Query("SELECT * FROM exercise")
     fun getExercises(): Flow<List<Exercise>>
 
-    /**
-     * Вставляет новое упражнение в базу данных.
-     *
-     * @param exercise Упражнение для вставки.
-     */
     @Insert
-    fun insertExercise(exercise: Exercise)
+    suspend fun insertExercise(exercise: Exercise)
 
-    /**
-     * Обновляет упражнение в базе данных по его идентификатору.
-     *
-     * @param id Идентификатор упражнения.
-     * @param title Название упражнения.
-     * @param description Описание упражнения.
-     * @param weight Вес упражнения.
-     * @param upNextTime Флаг, указывающий, должно ли упражнение быть усложнено в следующий раз.
-     * @param type Тип упражнения.
-     */
-    @Query(
-        "UPDATE exercise SET title = :title, " +
-                "description = :description, " +
-                "value = :value, " +
-                "upNextTime = :upNextTime, " +
-                "isWeight = :isWeight, time = :time WHERE id = :id "
-    )
-    fun updateExercise(
-        id: Long,
-        title: String,
-        description: String?,
-        value: Double?,
-        upNextTime: Boolean,
-        time: Time?,
-        isWeight: Boolean
-        )
+    @Query("UPDATE exercise SET title = :title, description = :description, value = :value, upNextTime = :upNextTime, isWeight = :isWeight, time = :time WHERE id = :id")
+    suspend fun updateExercise(id: Long, title: String, description: String?, value: Double?, upNextTime: Boolean, isWeight: Boolean, time: Time?)
 
-    /**
-     * Получает упражнение по его идентификатору.
-     *
-     * @param id Идентификатор упражнения.
-     * @return Flow с упражнением.
-     */
     @Query("SELECT * FROM exercise WHERE id = :id")
     fun getExercise(id: Long): Flow<Exercise>
+
+    @Query("DELETE FROM exercise WHERE id = :id")
+    suspend fun deleteExercise(id: Long)
 }

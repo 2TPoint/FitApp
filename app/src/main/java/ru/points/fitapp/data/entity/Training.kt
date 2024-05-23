@@ -20,5 +20,5 @@ data class Training(
     @ColumnInfo(name = "time")
     val time: String = "",
     @ColumnInfo(name = "exercises_list")
-    val exercisesList: MutableList<Exercise> = mutableListOf()
+    val exercisesList: MutableList<Long> = mutableListOf()
 )
