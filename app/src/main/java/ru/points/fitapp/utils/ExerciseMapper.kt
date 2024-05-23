@@ -1,8 +1,11 @@
 package ru.points.fitapp.utils
 
 import androidx.compose.ui.graphics.Color
+import org.koin.java.KoinJavaComponent.inject
 import ru.points.fitapp.data.entity.Exercise
+import ru.points.fitapp.data.manager.PreferencesManager
 import ru.points.fitapp.data.vo.ExerciseVo
+import java.util.prefs.PreferenceChangeEvent
 
 /**
  * @file ExerciseMapper.kt
@@ -12,15 +15,11 @@ import ru.points.fitapp.data.vo.ExerciseVo
  *
  * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
  */
+
+private val preferencesManager by inject<PreferencesManager>(PreferencesManager::class.java)
+
 object ExerciseMapper {
-    /**
-     * @brief Преобразует упражнение в VO.
-     *
-     * Преобразует объект упражнения в объект VO, включая преобразование типа упражнения в строку и цвет.
-     *
-     * @param value Упражнение для преобразования.
-     * @return Преобразованный объект VO.
-     */
+
     fun mapToVo(value: Exercise): ExerciseVo {
         return ExerciseVo(
             id = value.id,
@@ -33,29 +32,13 @@ object ExerciseMapper {
         )
     }
 
-    /**
-     * @brief Преобразует тип упражнения в строку.
-     *
-     * Преобразует тип упражнения в строку, представляющую единицы измерения.
-     *
-     * @param item Тип упражнения.
-     * @return Строка, представляющая единицы измерения.
-     */
     fun mapTypeToStr(weightUsed: Boolean): String {
         return when (weightUsed) {
-            false -> "мин"
-            true -> "кг"
+            false -> if (preferencesManager.isM) "м" else "мили"
+            true -> if (preferencesManager.isKg) "кг" else "фунты"
         }
     }
 
-    /**
-     * @brief Преобразует тип упражнения в цвет.
-     *
-     * Преобразует тип упражнения в цвет, используемый для отображения в пользовательском интерфейсе.
-     *
-     * @param item Тип упражнения.
-     * @return Цвет, используемый для отображения типа упражнения.
-     */
     fun mapTypeToColor(weightUsed: Boolean): Color {
         return when (weightUsed) {
             true -> Color.Red

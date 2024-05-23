@@ -8,21 +8,15 @@ import ru.points.fitapp.utils.Event
  * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
  */
 sealed class SettingsEvents : Event {
-    /**
-     * @brief Событие обновления булевого значения.
-     * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
-     */
     data class UpdateBooleanEvent(
         val value: Boolean,
         val type: ToggleType
-    ): SettingsEvents() {
-        /**
-         * @brief Типы переключателей.
-         * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
-         */
+    ) : SettingsEvents() {
+
         enum class ToggleType {
             THEME,
-            WEIGHT
+            WEIGHT,
+            DISTANCE
         }
     }
 }

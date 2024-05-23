@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.koin.android.ext.android.inject
+import ru.points.fitapp.data.manager.PreferencesManager
 import ru.points.fitapp.navigation.Destinations
 import ru.points.fitapp.navigation.FitAppNavHost
 import ru.points.fitapp.ui.theme.FitAppTheme
@@ -45,11 +47,13 @@ import ru.points.fitapp.ui.theme.FitAppTheme
  * @author Шмаков Ф.М., Демин И.А., Хоров Н.М.
  */
 class MainActivity : ComponentActivity() {
+
+    val preferences by inject<PreferencesManager>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FitAppTheme {
-
+            FitAppTheme(darkTheme = preferences.isDark) {
                 val navHostController = rememberNavController()
                 Surface(
                     modifier = Modifier.fillMaxSize(),

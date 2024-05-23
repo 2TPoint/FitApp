@@ -46,4 +46,6 @@
     <string name="Search">Поиск</string>
     <string name="eat">Еда</string>
     <string name="settings">Настройки</string>
+    <string name="use_miles">Использовать мили</string>
+    <string name="use_funts">Использовать фунты</string>
 </resources>
