@@ -2,7 +2,6 @@ package ru.points.fitapp.domain.exercises.use_case_interface
 
 import kotlinx.coroutines.flow.Flow
 import ru.points.fitapp.data.entity.Exercise
-import ru.points.fitapp.data.vo.ExerciseVo
 
 /**
  * @file GetExerciseUseCase.kt
@@ -23,5 +22,5 @@ interface GetExerciseUseCase {
      * @param id Уникальный идентификатор упражнения.
      * @return Flow с упражнением.
      */
-    fun handle(id: Long): Flow<Exercise>
+    suspend fun handle(id: Long): Flow<Exercise>
 }

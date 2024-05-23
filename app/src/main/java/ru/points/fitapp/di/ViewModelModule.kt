@@ -30,7 +30,8 @@ val viewModelModule = module {
         ExerciseListViewModel(
             getExercisesUseCase = get(),
             getExerciseUseCase = get(),
-            insertExerciseUseCase = get()
+            insertExerciseUseCase = get(),
+            deleteExerciseUseCase = get()
         )
     }
 
@@ -71,7 +72,9 @@ val viewModelModule = module {
             addNewExerciseToTrainingUseCase = get(),
             getTrainingById = get(),
             currentId = currentId,
-            getExercisesUseCase = get()
+            getExercisesUseCase = get(),
+            reorderTrainingExercisesUseCase = get(),
+            deleteSelectedExerciseUseCase = get()
         )
     }
 }

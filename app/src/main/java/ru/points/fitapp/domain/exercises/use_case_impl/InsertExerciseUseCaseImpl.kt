@@ -28,7 +28,7 @@ class InsertExerciseUseCaseImpl(
      * @param upNextTime Флаг, указывающий, должно ли упражнение быть добавлено в список "Следующее".
      * @param type Тип упражнения.
      */
-    override fun handle(
+    override suspend fun handle(
         title: String,
         description: String?,
         value: Double?,

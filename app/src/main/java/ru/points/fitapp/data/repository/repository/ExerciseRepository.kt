@@ -25,7 +25,7 @@ interface ExerciseRepository {
      *
      * @param exercise Упражнение для вставки.
      */
-    fun insertExercise(exercise: Exercise)
+    suspend fun insertExercise(exercise: Exercise)
 
     /**
      * Обновляет упражнение в базе данных по его идентификатору.
@@ -37,7 +37,7 @@ interface ExerciseRepository {
      * @param upNextTime Флаг, указывающий, должно ли упражнение быть выполнено в следующий раз.
      * @param type Тип упражнения.
      */
-    fun updateExercise(
+    suspend fun updateExercise(
         id: Long,
         title: String,
         description: String?,
@@ -52,5 +52,7 @@ interface ExerciseRepository {
      * @param id Идентификатор упражнения.
      * @return Flow с упражнением.
      */
-    fun getExercise(id: Long): Flow<Exercise>
+    suspend fun getExercise(id: Long): Flow<Exercise>
+
+    suspend fun deleteExercise(id: Long)
 }

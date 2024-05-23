@@ -3,21 +3,34 @@ package ru.points.fitapp.data.darasource.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import ru.points.fitapp.data.entity.Training
 
 @Dao
 interface TrainingsDao {
-    @Query(value = "select * from training")
+    @Query("SELECT * FROM training")
     fun getAllTrainings(): Flow<List<Training>>
 
-    @Query(value = "select * from training where id = :id")
+    @Query("SELECT * FROM training WHERE id = :id")
     fun getTrainingById(id: Long): Flow<Training>
 
     @Insert
-    fun insertTraining(training: Training)
+    suspend fun insertTraining(training: Training)
 
     @Update
-    fun updateTraining(training: Training)
+    suspend fun updateTraining(training: Training)
+
+    @Transaction
+    suspend fun removeExerciseFromAllTrainings(exerciseId: Long) {
+        val trainings = getAllTrainings().first()
+        trainings.forEach { training ->
+            if (training.exercisesList.contains(exerciseId)) {
+                training.exercisesList.remove(exerciseId)
+                updateTraining(training)
+            }
+        }
+    }
 }

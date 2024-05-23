@@ -93,7 +93,7 @@ fun FitAppNavHost(
             val id = navBackStackEntry.arguments?.getLong(TRAINING_ARGUMENT_ID_KEY)
             id?.let {
                 val viewModel: CurrentTrainingViewModel = getViewModel(parameters = { parametersOf(it) })
-                CurrentTrainingScreen(viewModel = viewModel)
+                CurrentTrainingScreen(viewModel = viewModel, viewModel::handle)
             }
         }
     }
