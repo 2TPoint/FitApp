@@ -51,15 +51,10 @@ private fun PopupData(
     onEvent: (Event) -> Unit,
     trainingPopupState: TrainingPopupState
 ) {
-    var name by remember { mutableStateOf(trainingPopupState.name) }
-    var description by remember { mutableStateOf(trainingPopupState.description) }
-
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.padding(16.dp),
     ) {
         Text(
             text = if (trainingPopupState.id == null) "Создайте тренировку" else "Редактируйте тренировку",
@@ -77,8 +72,8 @@ private fun PopupData(
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(text = "Название тренировки", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 TextField(
-                    value = name,
-                    onValueChange = { name = it },
+                    value = trainingPopupState.name,
+                    onValueChange = { onEvent(TrainingPopUpEvents.InputNewName(it)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
@@ -86,19 +81,24 @@ private fun PopupData(
                 )
                 Text(text = "Описание тренировки", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 TextField(
-                    value = description,
-                    onValueChange = { description = it },
+                    value = trainingPopupState.description,
+                    onValueChange = { onEvent(TrainingPopUpEvents.InputNewDescription(it)) },
+                    placeholder = { Text(text = "Описание") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    placeholder = { Text(text = "Описание") }
                 )
             }
         }
 
         Button(
             onClick = {
-                onEvent(TrainingPopUpEvents.SaveChanges(name = name, description = description))
+                onEvent(
+                    TrainingPopUpEvents.SaveChanges(
+                        name = trainingPopupState.name,
+                        description = trainingPopupState.description
+                    )
+                )
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -113,11 +113,11 @@ private fun PopupData(
                 onClick = {
                     onEvent(TrainingPopUpEvents.DeleteTraining)
                 },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
             ) {
                 Text(text = "Удалить", color = Color.White, fontWeight = FontWeight.Bold)
             }

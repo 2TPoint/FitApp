@@ -21,6 +21,9 @@ sealed class TrainingPopUpEvents: Event {
     data class SaveChanges(val name: String, val description: String) : TrainingPopUpEvents()
 
     data object DeleteTraining : TrainingPopUpEvents()
+
+    data class InputNewName(val name: String): TrainingPopUpEvents()
+    data class InputNewDescription(val description: String): TrainingPopUpEvents()
 }
 
 sealed class TrainingExerciseEvent: Event {

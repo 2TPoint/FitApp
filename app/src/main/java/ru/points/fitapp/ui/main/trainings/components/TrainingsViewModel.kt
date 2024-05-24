@@ -62,15 +62,27 @@ class TrainingsViewModel(
             is TrainingPopUpEvents.SaveChanges -> saveTraining(event)
 
             is TrainingPopUpEvents.DeleteTraining -> deleteTraining()
+
+            is TrainingPopUpEvents.InputNewName -> updateTrainingName(event.name)
+
+            is TrainingPopUpEvents.InputNewDescription -> updateTrainingDescription(event.description)
         }
 
     }
 
-    private fun deleteTraining(){
+    private fun deleteTraining() {
         _showPopup.value = false
         viewModelScope.launch(Dispatchers.IO) {
             deleteTrainingUseCase.handle(_popupState.value.id!!.toLong())
         }
+    }
+
+    private fun updateTrainingName(newName: String) {
+        _popupState.update { state -> state.copy(name = newName) }
+    }
+
+    private fun updateTrainingDescription(newDescription: String) {
+        _popupState.update { state -> state.copy(description = newDescription) }
     }
 
     private fun updatePopUpShowState(event: TrainingEvent.UpdatePopupShowedState) {
@@ -109,6 +121,8 @@ class TrainingsViewModel(
     }
 
     private fun saveTraining(event: TrainingPopUpEvents.SaveChanges) {
+        if (checkIfAllFieldsIsEmpty(event.name, event.description)) return
+
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 if (_popupState.value.id == null)
@@ -121,7 +135,12 @@ class TrainingsViewModel(
                     )
                 }
             }
+            _showPopup.update { false }
         }
+    }
+
+    private fun checkIfAllFieldsIsEmpty(vararg values: String): Boolean {
+        return values.all { value -> value.isEmpty() }
     }
 
 }
