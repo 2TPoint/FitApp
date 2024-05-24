@@ -16,21 +16,23 @@ class GetTrainingByIdUseCaseImpl(
 ) : GetTrainingByIdUseCase {
     override fun handle(id: Long): Flow<TrainingVo> = flow {
         trainingsRepository.getTrainingById(id).collect { training ->
-            val exercises = mutableListOf<ExerciseVo>()
-            for (exerciseId in training.exercisesList) {
-                val exercise = exerciseRepository.getExercise(exerciseId).firstOrNull()
-                exercise?.let {
-                    exercises.add(mapToVo(it))
+            if (training != null) {
+                val exercises = mutableListOf<ExerciseVo>()
+                for (exerciseId in training.exercisesList) {
+                    val exercise = exerciseRepository.getExercise(exerciseId).firstOrNull()
+                    exercise?.let {
+                        exercises.add(mapToVo(it))
+                    }
                 }
+                val trainingVo = TrainingVo(
+                    id = training.id,
+                    name = training.name,
+                    description = training.description,
+                    time = training.time,
+                    exercisesList = exercises
+                )
+                emit(trainingVo)
             }
-            val trainingVo = TrainingVo(
-                id = training.id,
-                name = training.name,
-                description = training.description,
-                time = training.time,
-                exercisesList = exercises
-            )
-            emit(trainingVo)
         }
     }
 }

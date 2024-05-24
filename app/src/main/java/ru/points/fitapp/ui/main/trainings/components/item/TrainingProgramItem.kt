@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.points.fitapp.data.vo.TrainingVo
 import ru.points.fitapp.navigation.Destinations
+import ru.points.fitapp.ui.main.trainings.components.TrainingEvent
+import ru.points.fitapp.utils.Event
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -32,7 +34,8 @@ import ru.points.fitapp.navigation.Destinations
 fun TrainingProgramItem(
     training: TrainingVo,
     navController: NavController,
-    modifier: Modifier
+    modifier: Modifier,
+    onEvent: (Event) -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -44,7 +47,14 @@ fun TrainingProgramItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { }
+                .clickable {
+                    onEvent(
+                        TrainingEvent.UpdatePopupShowedState(
+                            training.id.toLong(),
+                            isShowed = true
+                        )
+                    )
+                }
                 .padding(16.dp)
         ) {
             Column {

@@ -1,6 +1,5 @@
 package ru.points.fitapp.ui.main.trainings.screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.points.fitapp.data.vo.TrainingVo
-import ru.points.fitapp.ui.main.trainings.components.TrainingEvent
 import ru.points.fitapp.ui.main.trainings.components.item.TrainingProgramItem
 import ru.points.fitapp.utils.Event
 
@@ -34,16 +32,9 @@ fun TrainingProgramsScreen(
                 training = item,
                 navController = navController,
                 modifier = Modifier
-                    .clickable {
-                        onEvent(
-                            TrainingEvent.UpdatePopupShowedState(
-                                item.id.toLong(),
-                                isShowed = true
-                            )
-                        )
-                    }
                     .fillMaxWidth()
-                    .height(70.dp)
+                    .height(70.dp),
+                onEvent = onEvent
             )
         }
     }

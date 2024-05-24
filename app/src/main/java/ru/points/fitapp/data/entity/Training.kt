@@ -14,9 +14,9 @@ data class Training(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "name")
-    val name: String = "",
+    var name: String = "",
     @ColumnInfo(name = "description")
-    val description: String = "",
+    var description: String = "",
     @ColumnInfo(name = "time")
     val time: String = "",
     @ColumnInfo(name = "exercises_list")

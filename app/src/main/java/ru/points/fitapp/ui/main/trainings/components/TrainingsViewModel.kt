@@ -9,9 +9,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.points.fitapp.domain.trainings.interfaces.AddTraining
+import ru.points.fitapp.domain.trainings.interfaces.DeleteTrainingUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingByIdUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingsUseCase
+import ru.points.fitapp.domain.trainings.interfaces.UpdateTrainingInfoUseCase
 import ru.points.fitapp.ui.main.trainings.components.states.TrainingPopupState
 import ru.points.fitapp.ui.main.trainings.components.states.TrainingsListState
 import ru.points.fitapp.utils.Event
@@ -20,7 +23,9 @@ import ru.points.fitapp.utils.EventListener
 class TrainingsViewModel(
     private val addTrainingsUseCase: AddTraining,
     private val getTrainingsUseCase: GetTrainingsUseCase,
-    private val getTrainingByIdUseCase: GetTrainingByIdUseCase
+    private val getTrainingByIdUseCase: GetTrainingByIdUseCase,
+    private val updateTrainingInfoUseCase: UpdateTrainingInfoUseCase,
+    private val deleteTrainingUseCase: DeleteTrainingUseCase
 ) : ViewModel(), EventListener {
 
     private val _trainings = getTrainingsUseCase.handle()
@@ -48,26 +53,39 @@ class TrainingsViewModel(
 
     override fun handle(event: Event) {
 
-        when(event) {
+        when (event) {
 
-            is TrainingEvent.UpdatePopupShowedState -> updatePopUpShowState(event)
+            is TrainingEvent.UpdatePopupShowedState -> {
+                updatePopUpShowState(event)
+            }
 
             is TrainingPopUpEvents.SaveChanges -> saveTraining(event)
 
+            is TrainingPopUpEvents.DeleteTraining -> deleteTraining()
         }
 
     }
 
+    private fun deleteTraining(){
+        _showPopup.value = false
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteTrainingUseCase.handle(_popupState.value.id!!.toLong())
+        }
+    }
+
     private fun updatePopUpShowState(event: TrainingEvent.UpdatePopupShowedState) {
-        _showPopup.update { event.isShowed }
         if (event.isShowed) {
-            viewModelScope.launch(Dispatchers.IO) {
-                if (event.id == null)
-                    preparePopupForCreate()
-                else
-                    openPopup(event.id)
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    if (event.id == null) {
+                        preparePopupForCreate()
+                    } else {
+                        openPopup(event.id)
+                    }
+                }
             }
         }
+        _showPopup.value = event.isShowed
     }
 
     private fun preparePopupForCreate() {
@@ -76,14 +94,14 @@ class TrainingsViewModel(
         }
     }
 
-    private fun openPopup(id: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getTrainingByIdUseCase.handle(id = id).collect { training ->
+    private suspend fun openPopup(id: Long) {
+        getTrainingByIdUseCase.handle(id = id).collect { training ->
+            withContext(Dispatchers.Main) {
                 _popupState.update {
                     TrainingPopupState(
-                        id = it.id,
-                        name = it.name,
-                        description = it.description
+                        id = training.id.toLong(),
+                        name = training.name,
+                        description = training.description
                     )
                 }
             }
@@ -91,8 +109,18 @@ class TrainingsViewModel(
     }
 
     private fun saveTraining(event: TrainingPopUpEvents.SaveChanges) {
-        viewModelScope.launch(Dispatchers.IO) {
-            addTrainingsUseCase.handle(name = event.name, description = event.description)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                if (_popupState.value.id == null)
+                    addTrainingsUseCase.handle(name = event.name, description = event.description)
+                else {
+                    updateTrainingInfoUseCase.handle(
+                        _popupState.value.id!!,
+                        event.name,
+                        event.description
+                    )
+                }
+            }
         }
     }
 

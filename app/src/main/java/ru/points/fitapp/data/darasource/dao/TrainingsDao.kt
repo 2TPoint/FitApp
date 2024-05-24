@@ -1,6 +1,7 @@
 package ru.points.fitapp.data.darasource.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
@@ -33,4 +34,7 @@ interface TrainingsDao {
             }
         }
     }
+
+    @Delete
+    suspend fun deleteTraining(training: Training)
 }

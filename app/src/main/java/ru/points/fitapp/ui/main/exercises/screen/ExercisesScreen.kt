@@ -63,8 +63,7 @@ fun ExercisesScreen(
                         )
                     }
                     .fillMaxWidth()
-                    .height(70.dp),
-                onEvent = onEvent
+                    .height(70.dp)
             )
         }
     }

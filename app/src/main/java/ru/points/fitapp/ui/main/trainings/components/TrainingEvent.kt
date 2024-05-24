@@ -20,6 +20,7 @@ sealed class TrainingPopUpEvents: Event {
 
     data class SaveChanges(val name: String, val description: String) : TrainingPopUpEvents()
 
+    data object DeleteTraining : TrainingPopUpEvents()
 }
 
 sealed class TrainingExerciseEvent: Event {

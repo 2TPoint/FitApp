@@ -28,26 +28,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.points.fitapp.ui.main.trainings.components.TrainingEvent
 import ru.points.fitapp.ui.main.trainings.components.TrainingPopUpEvents
+import ru.points.fitapp.ui.main.trainings.components.states.TrainingPopupState
 import ru.points.fitapp.utils.Event
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTrainingScreen(
     sheetState: SheetState,
-    onEvent: (Event) -> Unit
+    onEvent: (Event) -> Unit,
+    trainingPopupState: TrainingPopupState
 ) {
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = { onEvent(TrainingEvent.UpdatePopupShowedState(isShowed = false)) }
     ) {
-        PopupData(onEvent = onEvent)
+        PopupData(onEvent = onEvent, trainingPopupState = trainingPopupState)
     }
 }
 
 @Composable
-private fun PopupData(onEvent: (Event) -> Unit) {
-    var name by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+private fun PopupData(
+    onEvent: (Event) -> Unit,
+    trainingPopupState: TrainingPopupState
+) {
+    var name by remember { mutableStateOf(trainingPopupState.name) }
+    var description by remember { mutableStateOf(trainingPopupState.description) }
 
     Column(
         modifier = Modifier
@@ -57,7 +62,7 @@ private fun PopupData(onEvent: (Event) -> Unit) {
         verticalArrangement = Arrangement.Top
     ) {
         Text(
-            text = "Создайте тренировку",
+            text = if (trainingPopupState.id == null) "Создайте тренировку" else "Редактируйте тренировку",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -103,17 +108,19 @@ private fun PopupData(onEvent: (Event) -> Unit) {
             Text(text = "Сохранить", color = Color.White, fontWeight = FontWeight.Bold)
         }
 
-        Button(
-            onClick = {
-                onEvent(TrainingEvent.UpdatePopupShowedState(isShowed = false))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
-        ) {
-            Text(text = "Отмена", color = Color.White, fontWeight = FontWeight.Bold)
+        if (trainingPopupState.id != null) {
+            Button(
+                onClick = {
+                    onEvent(TrainingPopUpEvents.DeleteTraining)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+            ) {
+                Text(text = "Удалить", color = Color.White, fontWeight = FontWeight.Bold)
+            }
         }
     }
 }

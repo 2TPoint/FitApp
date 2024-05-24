@@ -12,7 +12,6 @@ import ru.points.fitapp.domain.exercises.use_case_interface.GetExercisesUseCase
 import ru.points.fitapp.domain.trainings.interfaces.AddNewExerciseToTrainingUseCase
 import ru.points.fitapp.domain.trainings.interfaces.DeleteSelectedExerciseUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingByIdUseCase
-import ru.points.fitapp.domain.trainings.interfaces.ReorderTrainingExercisesUseCase
 import ru.points.fitapp.ui.main.trainings.components.states.CurrentTrainingState
 import ru.points.fitapp.utils.Event
 import ru.points.fitapp.utils.EventListener
@@ -21,7 +20,6 @@ class CurrentTrainingViewModel(
     private val addNewExerciseToTrainingUseCase: AddNewExerciseToTrainingUseCase,
     private val getTrainingById: GetTrainingByIdUseCase,
     private val getExercisesUseCase: GetExercisesUseCase,
-    private val reorderTrainingExercisesUseCase: ReorderTrainingExercisesUseCase,
     private val deleteSelectedExerciseUseCase: DeleteSelectedExerciseUseCase,
     private val currentId: Long
 ) : ViewModel(), EventListener {
@@ -53,22 +51,7 @@ class CurrentTrainingViewModel(
         val currentState = trainingState.value
         when (event) {
             is CurrentTrainingEvents.AddNewExercise -> addNewExercise(event)
-            is CurrentTrainingEvents.ReorderExercises -> reorderItems(event)
             is CurrentTrainingEvents.DeleteSelectedExercise -> deleteSelectedExersiceFromTraining(event)
-        }
-    }
-
-    private fun reorderItems(event: CurrentTrainingEvents.ReorderExercises) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val fromIndex = event.fromIndex
-            val toIndex = event.toIndex
-            val exercisesList = event.training.exercisesList
-
-            if (fromIndex in exercisesList.indices && toIndex in exercisesList.indices) {
-                reorderTrainingExercisesUseCase.handle(event.training, fromIndex, toIndex)
-            } else {
-                println("Index out of bounds: fromIndex=$fromIndex, toIndex=$toIndex, list size=${exercisesList.size}")
-            }
         }
     }
 

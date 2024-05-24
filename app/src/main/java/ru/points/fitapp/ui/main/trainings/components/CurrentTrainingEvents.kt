@@ -8,6 +8,5 @@ sealed class CurrentTrainingEvents: Event {
     data class AddNewExercise(val training: TrainingVo, val id: Long): Event
 
     data class DeleteSelectedExercise(val pos: Int): Event
-    data class ReorderExercises(val training: TrainingVo, val fromIndex: Int, val toIndex: Int): Event
 
 }

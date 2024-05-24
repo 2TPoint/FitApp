@@ -16,15 +16,17 @@ import ru.points.fitapp.domain.food.GetNutritionsForCommonListUseCase
 import ru.points.fitapp.domain.trainings.implementations.AddNewExerciseToTrainingImplUseCase
 import ru.points.fitapp.domain.trainings.implementations.AddTrainingImpl
 import ru.points.fitapp.domain.trainings.implementations.DeleteSelectedExerciseUseCaseImpl
+import ru.points.fitapp.domain.trainings.implementations.DeleteTrainingUseCaseImpl
 import ru.points.fitapp.domain.trainings.implementations.GetTrainingByIdUseCaseImpl
 import ru.points.fitapp.domain.trainings.implementations.GetTrainingsUseCaseImpl
-import ru.points.fitapp.domain.trainings.implementations.ReorderTrainingExercisesUseCaseImpl
+import ru.points.fitapp.domain.trainings.implementations.UpdateTrainingInfoUseCaseImpl
 import ru.points.fitapp.domain.trainings.interfaces.AddNewExerciseToTrainingUseCase
 import ru.points.fitapp.domain.trainings.interfaces.AddTraining
 import ru.points.fitapp.domain.trainings.interfaces.DeleteSelectedExerciseUseCase
+import ru.points.fitapp.domain.trainings.interfaces.DeleteTrainingUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingByIdUseCase
 import ru.points.fitapp.domain.trainings.interfaces.GetTrainingsUseCase
-import ru.points.fitapp.domain.trainings.interfaces.ReorderTrainingExercisesUseCase
+import ru.points.fitapp.domain.trainings.interfaces.UpdateTrainingInfoUseCase
 
 val useCaseModule = module {
 
@@ -70,10 +72,6 @@ val useCaseModule = module {
         GetTrainingByIdUseCaseImpl(trainingsRepository = get(), exerciseRepository = get())
     }
 
-    factory<ReorderTrainingExercisesUseCase> {
-        ReorderTrainingExercisesUseCaseImpl(trainingsRepository = get())
-    }
-
     factory<DeleteExerciseUseCase> {
         DeleteExerciseUseCaseImpl(exerciseRepository = get(), trainingRepository = get())
     }
@@ -84,5 +82,13 @@ val useCaseModule = module {
 
     factory<UpdateExerciseUseCase> {
         UpdateExerciseUseCaseImpl(exerciseRepository = get())
+    }
+
+    factory<UpdateTrainingInfoUseCase> {
+        UpdateTrainingInfoUseCaseImpl(trainingsRepository = get())
+    }
+
+    factory<DeleteTrainingUseCase> {
+        DeleteTrainingUseCaseImpl(trainingsRepository = get())
     }
 }

@@ -166,7 +166,8 @@ private fun MainScreen(
     if (trainingsListState.isPopupShowed) {
         AddTrainingScreen(
             sheetState = trainingSheetState,
-            onEvent = onTrainingEvent
+            onEvent = onTrainingEvent,
+            trainingPopupState = trainingsListState.popupState
         )
     }
 
