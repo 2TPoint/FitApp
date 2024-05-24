@@ -63,7 +63,8 @@ fun ExercisesScreen(
                         )
                     }
                     .fillMaxWidth()
-                    .height(70.dp)
+                    .height(70.dp),
+                onEvent = onEvent
             )
         }
     }
@@ -165,23 +166,21 @@ fun ExerciseListItem(
                     }
                 }
             }
-            if (showBinIcon)
-
-                IconButton(onClick = {
-                    if (!inTrainingMode)
-                        onEvent(ExerciseEvent.DeleteExercise(exerciseVo.id))
-                    else
-                        onEvent(CurrentTrainingEvents.DeleteSelectedExercise(position))
-                }
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(width = 29.dp, height = 29.dp),
-                        imageVector = Icons.Default.DeleteOutline,
-                        contentDescription = ""
-                    )
-                }
+            IconButton(onClick = {
+                if (!inTrainingMode)
+                    onEvent(ExerciseEvent.DeleteExercise(exerciseVo.id))
+                else
+                    onEvent(CurrentTrainingEvents.DeleteSelectedExercise(position))
+            }
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .weight(1f)
+                        .size(width = 29.dp, height = 29.dp),
+                    imageVector = Icons.Default.DeleteOutline,
+                    contentDescription = ""
+                )
+            }
         }
     }
 }
